@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.markdown-content h1 {
+  @apply text-2xl font-bold mb-4;
+}
+.markdown-content h2 {
+  @apply text-xl font-semibold mb-3;
+}
+.markdown-content p {
+  @apply text-gray-600 mb-2;
+}
+.markdown-content ul {
+  @apply list-disc pl-6 mb-2;
+}
