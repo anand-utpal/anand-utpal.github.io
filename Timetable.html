@@ -1,62 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Weekly Physics Timetable</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-    }
-    table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      text-align: center;
-      padding: 10px;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    .free {
-      background-color: #d4edda;
-    }
-    .lunch {
-      background-color: #ffeeba;
-      font-weight: bold;
-    }
-    .class {
-      background-color: #f8d7da;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Timetable</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .timetable-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 1000px;
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+        td {
+            height: 60px;
+        }
+        .free {
+            background-color: #e6ffe6;
+        }
+        .lunch {
+            background-color: #ffeb3b;
+            font-weight: bold;
+        }
+        .course {
+            background-color: #bbdefb;
+        }
+        caption {
+            font-size: 20px;
+            font-weight: bold;
+            padding: 10px;
+            background-color: #2196F3;
+            color: white;
+            border-radius: 5px 5px 0 0;
+        }
+    </style>
 </head>
 <body>
-  <h2>Weekly Physics Timetable</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Hour</th>
-        <th>9</th>
-        <th>10</th>
-        <th>11</th>
-        <th>12</th>
-        <th>1</th>
-        <th>Lunch</th>
-        <th>2</th>
-        <th>3</th>
-        <th>4</th>
-        <th>5</th>
-        <th>7</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>Monday</td><td class="free"></td><td class="class">E</td><td class="class">F</td><td class="class">L</td><td class="lunch">Lunch</td><td class="lunch">Lunch</td><td class="free"></td><td class="free"></td><td class="class">J</td><td class="free"></td><td class="free"></td></tr>
-      <tr><td>Tuesday</td><td class="free"></td><td class="class">D</td><td class="class">F</td><td class="class">L</td><td class="lunch">Lunch</td><td class="lunch">Lunch</td><td class="free"></td><td class="free"></td><td class="class">K</td><td class="free"></td><td class="free"></td></tr>
-      <tr><td>Wednesday</td><td class="class">B</td><td class="class">D</td><td class="free"></td><td class="class">L</td><td class="lunch">Lunch</td><td class="lunch">Lunch</td><td class="free"></td><td class="free"></td><td class="free"></td><td class="free"></td><td class="free"></td></tr>
-      <tr><td>Thursday</td><td class="free"></td><td class="class">E</td><td class="class">X</td><td class="class">L</td><td class="lunch">Lunch</td><td class="lunch">Lunch</td><td class="class">I</td><td class="class">X</td><td class="class">K</td><td class="class">J</td><td class="free"></td></tr>
-      <tr><td>Friday</td><td class="free"></td><td class="free"></td><td class="class">D</td><td class="class">L</td><td class="lunch">Lunch</td><td class="lunch">Lunch</td><td class="class">L</td><td class="class">I</td><td class="free"></td><td class="free"></td><td class="free"></td></tr>
-    </tbody>
-  </table>
+    <div class="timetable-container">
+        <table>
+            <caption>Weekly Timetable</caption>
+            <tr>
+                <th>Day</th>
+                <th>9:00-10:00</th>
+                <th>10:00-11:00</th>
+                <th>11:00-12:00</th>
+                <th>12:00-1:00</th>
+                <th>1:00-2:00</th>
+                <th>2:00-3:00</th>
+                <th>3:00-4:00</th>
+                <th>4:00-5:00</th>
+                <th>5:00-7:00</th>
+            </tr>
+            <tr>
+                <th>Monday</th>
+                <td class="free">Free</td>
+                <td class="course">Methods of Exp. Physics (B)</td>
+                <td class="course">Non Linear Dynamics (E)</td>
+                <td class="course">Optics (F)</td>
+                <td class="lunch">Lunch (L)</td>
+                <td class="course">Electrodynamics (I)</td>
+                <td class="free">Free</td>
+                <td class="free">Free</td>
+                <td class="course">Electronics-1 with Lab (J)</td>
+            </tr>
+            <tr>
+                <th>Tuesday</th>
+                <td class="free">Free</td>
+                <td class="course">QM1 (D)</td>
+                <td class="course">Non Linear Dynamics (E)</td>
+                <td class="course">Optics (F)</td>
+                <td class="lunch">Lunch (L)</td>
+                <td class="free">Free</td>
+                <td class="free">Free</td>
+                <td class="course">Math Methods for Physics 2 (K)</td>
+                <td class="free">Free</td>
+            </tr>
+            <tr>
+                <th>Wednesday</th>
+                <td class="course">Methods of Exp. Physics (B)</td>
+                <td class="course">QM1 (D)</td>
+                <td class="free">Free</td>
+                <td class="course">Optics (F)</td>
+                <td class="lunch">Lunch (L)</td>
+                <td class="free">Free</td>
+                <td class="free">Free</td>
+                <td class="free">Free</td>
+                <td class="free">Free</td>
+            </tr>
+            <tr>
+                <th>Thursday</th>
+                <td class="free">Free</td>
+                <td class="course">Non Linear Dynamics (E)</td>
+                <td class="free">Free</td>
+                <td class="free">Free</td>
+                <td class="lunch">Lunch (L)</td>
+                <td class="course">Electrodynamics (I)</td>
+                <td class="free">Free</td>
+                <td class="course">Math Methods for Physics 2 (K)</td>
+                <td class="course">Electronics-1 with Lab (J)</td>
+            </tr>
+            <tr>
+                <th>Friday</th>
+                <td class="free">Free</td>
+                <td class="free">Free</td>
+                <td class="course">QM1 (D)</td>
+                <td class="course">Electrodynamics (I)</td>
+                <td class="lunch">Lunch (L)</td>
+                <td class="free">Free</td>
+                <td class="free">Free</td>
+                <td class="free">Free</td>
+                <td class="free">Free</td>
+            </tr>
+        </table>
+    </div>
 </body>
 </html>
