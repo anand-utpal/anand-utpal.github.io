@@ -66,6 +66,14 @@
         a:hover {
             text-decoration: underline;
         }
+        .copy-icon {
+            cursor: pointer;
+            margin-left: 8px;
+            font-size: 18px;
+        }
+        .copy-icon:hover {
+            color: #2196F3;
+        }
     </style>
 </head>
 <body>
@@ -87,33 +95,33 @@
             <tr>
                 <th>Monday</th>
                 <td class="free"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Methods of Exp. Physics (LHC 306)</a></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Non Linear Dynamics (LHC 303)</a></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Optics (LHC 301)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Methods of Exp. Physics (LHC 306)</a><span class="copy-icon" onclick="copyCourseCode('PH3153')">📋</span></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Non Linear Dynamics (LHC 303)</a><span class="copy-icon" onclick="copyCourseCode('PH4273')">📋</span></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Optics (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3134')">📋</span></td>
                 <td class="lunch"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Electrodynamics (LHC 301)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Electrodynamics (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3114')">📋</span></td>
                 <td class="free"></td>
                 <td class="free"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Electronics-1 with Lab (LHC 304)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Electronics-1 with Lab (LHC 304)</a><span class="copy-icon" onclick="copyCourseCode('PH3144')">📋</span></td>
             </tr>
             <tr>
                 <th>Tuesday</th>
                 <td class="free"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">QM1 (LHC 301)</a></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Non Linear Dynamics (LHC 303)</a></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Optics (LHC 301)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">QM1 (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3124')">📋</span></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Non Linear Dynamics (LHC 303)</a><span class="copy-icon" onclick="copyCourseCode('PH4273')">📋</span></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Optics (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3134')">📋</span></td>
                 <td class="lunch"></td>
                 <td class="free"></td>
                 <td class="free"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Math Methods for Physics 2 (LHC 301)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Math Methods for Physics 2 (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3163')">📋</span></td>
                 <td class="free"></td>
             </tr>
             <tr>
                 <th>Wednesday</th>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Methods of Exp. Physics (LHC 306)</a></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">QM1 (LHC 301)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Methods of Exp. Physics (LHC 306)</a><span class="copy-icon" onclick="copyCourseCode('PH3153')">📋</span></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">QM1 (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3124')">📋</span></td>
                 <td class="free"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Optics (LHC 301)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Optics (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3134')">📋</span></td>
                 <td class="lunch"></td>
                 <td class="free"></td>
                 <td class="free"></td>
@@ -123,29 +131,40 @@
             <tr>
                 <th>Thursday</th>
                 <td class="free"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Non Linear Dynamics (LHC 303)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Non Linear Dynamics (LHC 303)</a><span class="copy-icon" onclick="copyCourseCode('PH4273')">📋</span></td>
                 <td class="free"></td>
                 <td class="free"></td>
                 <td class="lunch"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Electrodynamics (LHC 301)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Electrodynamics (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3114')">📋</span></td>
                 <td class="free"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Math Methods for Physics 2 (LHC 301)</a></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Electronics-1 with Lab (LHC 304)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Math Methods for Physics 2 (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3163')">📋</span></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Electronics-1 with Lab (LHC 304)</a><span class="copy-icon" onclick="copyCourseCode('PH3144')">📋</span></td>
             </tr>
             <tr>
                 <th>Friday</th>
                 <td class="free"></td>
                 <td class="free"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">QM1 (LHC 301)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">QM1 (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3124')">📋</span></td>
                 <td class="free"></td>
                 <td class="lunch"></td>
-                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Electrodynamics (LHC 301)</a></td>
+                <td class="course"><a href="https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D">Electrodynamics (LHC 301)</a><span class="copy-icon" onclick="copyCourseCode('PH3114')">📋</span></td>
                 <td class="free"></td>
                 <td class="free"></td>
                 <td class="free"></td>
             </tr>
         </table>
-        <p>Instructions: Create a bookmark with the provided 'Course QR Code Redirect' bookmarklet code. Click a course name to open the directory, then run the bookmarklet and enter the course code: Electrodynamics (PH3114), QM1 (PH3124), Optics (PH3134), Electronics-1 with Lab (PH3144), Methods of Exp. Physics (PH3153), Math Methods for Physics 2 (PH3163), Non Linear Dynamics (PH4273).</p>
+        <p>Instructions: Create a bookmark with the provided 'Course QR Code Redirect' bookmarklet code. Click a course name to open the directory, then run the bookmarklet and paste the course code (copied by clicking the 📋 icon next to the course name). Course codes: Electrodynamics (PH3114), QM1 (PH3124), Optics (PH3134), Electronics-1 with Lab (PH3144), Methods of Exp. Physics (PH3153), Math Methods for Physics 2 (PH3163), Non Linear Dynamics (PH4273).</p>
     </div>
+    <script>
+        function copyCourseCode(code) {
+            navigator.clipboard.writeText(code)
+                .then(() => {
+                    alert('Course code ' + code + ' copied to clipboard!');
+                })
+                .catch(err => {
+                    alert('Failed to copy course code: ' + err);
+                });
+        }
+    </script>
 </body>
 </html>
