@@ -74,6 +74,21 @@
         .copy-icon:hover {
             color: #2196F3;
         }
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 1000;
+        }
+        .notification.fade-out {
+            opacity: 0;
+        }
     </style>
 </head>
 <body>
@@ -153,15 +168,38 @@
                 <td class="free"></td>
             </tr>
         </table>
-        <p>   </div>
+    </div>
     <script>
         function copyCourseCode(code) {
             navigator.clipboard.writeText(code)
                 .then(() => {
-                    alert('Course code ' + code + ' copied to clipboard!');
+                    // Create notification div
+                    const notification = document.createElement('div');
+                    notification.className = 'notification';
+                    notification.textContent = `Copied ${code}!`;
+                    document.body.appendChild(notification);
+                    // Trigger fade-out after 2 seconds
+                    setTimeout(() => {
+                        notification.classList.add('fade-out');
+                        // Remove notification after fade-out
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 500); // Matches fade-out transition duration
+                    }, 2000);
                 })
                 .catch(err => {
-                    alert('Failed to copy course code: ' + err);
+                    console.error('Failed to copy course code:', err);
+                    // Fallback: show a non-blocking notification for error
+                    const notification = document.createElement('div');
+                    notification.className = 'notification';
+                    notification.textContent = 'Failed to copy code';
+                    document.body.appendChild(notification);
+                    setTimeout(() => {
+                        notification.classList.add('fade-out');
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 500);
+                    }, 2000);
                 });
         }
     </script>
