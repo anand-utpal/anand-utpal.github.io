@@ -3,60 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Code Highlighter</title>
+    <title>Redirecting...</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            text-align: center;
         }
         h1 {
             color: #2196F3;
         }
-        .highlight {
-            background-color: yellow;
-            padding: 2px 5px;
-            border: 1px solid #ccc;
-        }
     </style>
 </head>
 <body>
-    <h1>Loading course files...</h1>
-    <div id="content"></div>
+    <h1>Redirecting to course file...</h1>
     <script>
         // Get course code from URL query parameter
         const urlParams = new URLSearchParams(window.location.search);
         const courseCode = urlParams.get('code') || '';
 
-        // Target URL
+        // Target directory URL
         const targetUrl = 'https://www.iiserpune.in/sam/teacher/qrcodes/?C=M;O=D';
+        const baseUrl = 'https://www.iiserpune.in/sam/teacher/qrcodes/';
 
-        // Fetch the target page
+        // Fetch the directory listing
         fetch(targetUrl)
             .then(response => response.text())
             .then(data => {
-                // Inject the page content into the div
-                document.getElementById('content').innerHTML = data;
+                // Create a temporary DOM element to parse the HTML
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+                const links = doc.getElementsByTagName('a');
 
-                // Find and highlight elements containing the course code
-                const links = document.getElementsByTagName('a');
-                let found = false;
+                // Find the first link containing the course code
                 for (let link of links) {
                     if (link.textContent.includes(courseCode)) {
-                        link.classList.add('highlight');
-                        link.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        found = true;
-                        break; // Highlight and scroll to the first match
+                        const fileName = link.getAttribute('href');
+                        // Construct the full URL and redirect
+                        window.location.href = baseUrl + fileName;
+                        return;
                     }
                 }
 
-                // Update heading
-                document.query3507h1').textContent = found
-                    ? `Course files for ${courseCode}`
-                    : `No files found for course code ${courseCode}`;
+                // If no file is found, display an error
+                document.querySelector('h1').textContent = `No file found for course code ${courseCode}`;
             })
             .catch(error => {
-                console.error('Error fetching page:', error);
-                document.querySelector('h1').textContent = 'Error loading course files';
+                console.error('Error fetching directory:', error);
+                document.querySelector('h1').textContent = 'Error loading course file';
             });
     </script>
 </body>
