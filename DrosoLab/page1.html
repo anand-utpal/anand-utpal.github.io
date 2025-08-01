@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A4 Report: Motion Detection Algorithm (Detailed)</title>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+        </script>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .a4-container {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2cm;
+            margin: 1cm auto;
+            border: 1px #D3D3D3 solid;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Georgia', serif;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24pt;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 18pt;
+            margin-top: 1.5em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 14pt;
+            margin-top: 1.2em;
+        }
+
+        h4 {
+            font-size: 12pt;
+            margin-top: 1em;
+            font-style: italic;
+            color: #444;
+        }
+
+        p,
+        li {
+            font-size: 12pt;
+            text-align: justify;
+        }
+
+        .math-block {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 20px 0;
+            overflow-x: auto;
+            text-align: center;
+            font-size: 11pt;
+        }
+
+        strong,
+        b {
+            color: #000;
+        }
+
+        @media print {
+
+            body,
+            .a4-container {
+                margin: 0;
+                box-shadow: none;
+                border: none;
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a4-container">
+        <h1>Motion Detection Algorithm: A Detailed Mathematical Analysis</h1>
+
+        <h2>Introduction</h2>
+        <p>
+            The automated detection of moving objects within a video sequence is a cornerstone of computer vision. In a
+            controlled experimental setting, such as tracking a *Drosophila*, classical algorithms offer a robust and
+            computationally efficient alternative to resource-intensive machine learning models. The core strategy is to
+            create an adaptive statistical model of the scene's background and then identify any pixels that
+            significantly deviate from this learned model. Such deviations are classified as "foreground," or motion.
+        </p>
+        <p>
+            This report provides a detailed mathematical exposition of the pipeline used, from initial image
+            simplification to the final object localization, focusing on the Gaussian Mixture Model (GMM) as the central
+            algorithm for adaptive background subtraction.
+        </p>
+
+        <hr style="margin: 2em 0;">
+
+        <h2>1. Pre-processing: Grayscale Conversion</h2>
+        <p>
+            The initial step involves converting the 3-channel BGR (Blue, Green, Red) image into a single-channel
+            grayscale image. This is a critical optimization. By reducing the dimensionality of each pixel's data from a
+            3D vector to a 1D scalar (intensity), the computational complexity of all subsequent steps is drastically
+            decreased.
+        </p>
+        <h4>Mathematical Formulation and Rationale</h4>
+        <p>
+            The conversion is not a simple average of the channels. It employs a weighted sum to create a luminance
+            value that reflects human perception. The human eye is most sensitive to green light, moderately sensitive
+            to red, and least sensitive to blue. The weights used in the `cv2.cvtColor` function are derived from the
+            CIE 1931 color space standard to approximate this photopic (daylight) vision.
+        </p>
+        <div class="math-block">
+            <b>Luminance (Grayscale Intensity)</b> = $0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B$
+        </div>
+        <p>
+            This ensures that the resulting grayscale image is a perceptually accurate representation of the scene's
+            brightness, which is sufficient for detecting the motion of a dark object against a lighter background.
+        </p>
+
+        <hr style="margin: 2em 0;">
+
+        <h2>2. Adaptive Background Modeling: The Gaussian Mixture Model (GMM)</h2>
+        <p>
+            The core of the system is `cv2.createBackgroundSubtractorMOG2`. Simple methods like frame differencing are
+            brittle and fail with minor illumination changes. A static background model (e.g., averaging the first N
+            frames) is not adaptive. The GMM addresses these issues by modeling each pixel's intensity as a "mixture" of
+            several Gaussian distributions, allowing it to represent complex, multi-modal backgrounds.
+        </p>
+        <h3>2.1 The Rationale: Why a Mixture of Gaussians?</h3>
+        <p>
+            A single Gaussian per pixel can model a stable background color with some noise. However, real-world scenes
+            are more complex. A pixel might represent a spot that is sometimes in shadow and sometimes not, or it might
+            be part of a computer monitor with slight flicker. In these cases, the pixel has multiple valid "background"
+            states. A GMM can capture this multi-modality by maintaining several distributions per pixel, each
+            representing a different stable state.
+        </p>
+
+        <h3>2.2 The Mathematical Model</h3>
+        <p>
+            The probability of observing a given intensity $X_t$ for a pixel at time $t$ is modeled as a weighted sum of
+            $K$ Gaussian distributions:
+        </p>
+        <div class="math-block">
+            $
+            P(X_t) = \sum_{i=1}^{K} w_{i,t} \cdot \mathcal{N}(X_t | \mu_{i,t}, \sigma^2_{i,t})
+            $
+        </div>
+        <p>
+            Where for each of the $K$ distributions:
+        <ul>
+            <li>$w_{i,t}$ is the <b>weight</b>: an estimate of the prior probability that the $i$-th Gaussian represents
+                the true background. It signifies the "confidence" in this distribution. $\sum w_i = 1$.</li>
+            <li>$\mu_{i,t}$ is the <b>mean</b>: the expected intensity value for this distribution.</li>
+            <li>$\sigma^2_{i,t}$ is the <b>variance</b>: a measure of the spread or stability of the intensity values
+                for this distribution. A lower variance implies a more stable color.</li>
+        </ul>
+        </p>
+
+        <h3>2.3 The Classification Process</h3>
+        <p>When a new pixel intensity $X_t$ arrives, the algorithm follows a rigorous process to classify it.</p>
+        <h4>Step 1: Ranking Distributions</h4>
+        <p>The $K$ distributions are first ranked in descending order based on their "fitness" value, $w/\sigma$. This
+            metric prioritizes distributions that are both highly probable (large $w$) and highly stable (small
+            $\sigma$). This rank is crucial for the next steps.</p>
+
+        <h4>Step 2: Matching</h4>
+        <p>The algorithm iterates through the ranked distributions to find a match. A match occurs if the pixel's
+            intensity falls within a threshold $D$ (typically 2.5) of a distribution's mean:</p>
+        <div class="math-block">
+            $
+            |X_t - \mu_{i, t-1}| \le D \cdot \sigma_{i, t-1}
+            $
+        </div>
+
+        <h4>Step 3: Background Model Decision</h4>
+        <p>A crucial detail is that not all matching distributions are considered "background." A background model is
+            formed by taking the top-ranked distributions (the "fittest" ones) until their cumulative weight exceeds a
+            threshold $T$ (e.g., `backgroundRatio` in OpenCV, often ~0.9).
+        <ul>
+            <li>If $X_t$ matches one of the distributions <b>within</b> this background model, the pixel is classified
+                as <b>Background</b>.</li>
+            <li>If $X_t$ matches a distribution <b>outside</b> this background model, or finds no match at all, it is
+                classified as <b>Foreground</b>. This prevents short-lived objects from being immediately absorbed into
+                the background.</li>
+        </ul>
+        </p>
+
+        <h3>2.4 The Adaptive Update Mechanism</h3>
+        <p>The model continuously learns and adapts. The learning rate $\alpha$ (a value between 0 and 1) controls how
+            quickly the model incorporates new information.</p>
+        <h4>Case 1: A Match is Found</h4>
+        <p>The parameters for the matched $i$-th distribution are updated to incorporate the new pixel value. The
+            weights of all distributions are also adjusted.</p>
+        <div class="math-block">
+            $w_{i,t} = (1-\alpha)w_{i,t-1} + \alpha \quad$ (Weight increases towards 1) <br>
+            $w_{j,t} = (1-\alpha)w_{j,t-1} \quad$ (for all non-matching distributions $j \ne i$) <br><br>
+            $\mu_{i,t} = (1-\rho)\mu_{i,t-1} + \rho X_t$ <br>
+            $\sigma^2_{i,t} = (1-\rho)\sigma^2_{i,t-1} + \rho(X_t - \mu_{i,t})^2$
+        </div>
+        <p>The per-distribution learning rate $\rho = \alpha \cdot \mathcal{N}(X_t|\mu_{i,t-1}, \sigma^2_{i,t-1})$
+            ensures that updates are proportional to the learning rate $\alpha$ and the probability of the new pixel
+            value given the old distribution.</p>
+
+        <h4>Case 2: No Match is Found (Foreground)</h4>
+        <p>The least probable distribution (the last one in the ranked list) is discarded. A new distribution is created
+            in its place, initialized with:
+        <ul>
+            <li><b>Mean ($\mu$):</b> The current pixel's intensity, $X_t$.</li>
+            <li><b>Weight ($w$):</b> A low initial weight.</li>
+            <li><b>Variance ($\sigma^2$):</b> A high initial variance (since its stability is unknown).</li>
+        </ul>
+        This mechanism allows new objects that remain in the scene long enough to eventually "graduate" into the
+        background model.
+        </p>
+
+        <hr style="margin: 2em 0;">
+
+        <h2>3. Post-Processing and Object Analysis</h2>
+        <p>The raw foreground mask produced by the GMM is refined to isolate and identify the target objects.</p>
+
+        <h3>3.1. Binary Thresholding</h3>
+        <p>
+            This step converts the probabilistic grayscale foreground mask into a definitive binary image. The code uses
+            a fixed threshold (127), which works well in environments with consistent lighting.
+        </p>
+        <div class="math-block">
+            $
+            \text{output}(x,y) =
+            \begin{cases}
+            255 & \text{if } \text{input}(x,y) > 127 \\
+            0 & \text{otherwise}
+            \end{cases}
+            $
+        </div>
+
+        <h3>3.2. Contour Detection</h3>
+        <p>
+            `cv2.findContours` is used to find the outlines of the white foreground blobs. The flags used in the code
+            are significant:
+        <ul>
+            <li>`RETR_EXTERNAL`: Retrieves only the outermost contours. If a blob has a hole in it, only the external
+                boundary is found, which is efficient for finding distinct objects.</li>
+            <li>`CHAIN_APPROX_SIMPLE`: Compresses the contour by storing only the endpoints of its straight-line
+                segments. For a rectangle, this means only 4 points are stored instead of all the points along its
+                perimeter, saving memory.</li>
+        </ul>
+        </p>
+
+        <h3>3.3. Contour Filtering via Area</h3>
+        <p>
+            This is a powerful heuristic filter. The area of each contour polygon is calculated using the Shoelace
+            formula. This area is then compared against `min_area` and `max_area` thresholds. This step is critical for
+            eliminating:
+        <ul>
+            <li><b>Small Contours:</b> Likely due to sensor noise or minor artifacts from the GMM.</li>
+            <li><b>Large Contours:</b> Often caused by large-scale lighting changes or shadows that the GMM has not yet
+                fully adapted to.</li>
+        </ul>
+        </p>
+
+        <h3>3.4. Object Localization: From Contour to Coordinate</h3>
+        <p>
+            After a contour has been validated by the area filter, the algorithm needs to represent the entire shape (a
+            collection of pixels) as a single, representative $(x, y)$ coordinate. The code employs a computationally
+            efficient and straightforward method for this.
+        </p>
+        <h4>Method: Bounding Box Center</h4>
+        <p>
+            The approach is to find the geometric center of the smallest upright rectangle that encloses the contour.
+        <ol>
+            <li><b>Find the Bounding Rectangle:</b> The function `cv2.boundingRect(contour)` is called. It iterates
+                through all the points of the contour to find the minimum and maximum x and y values. It returns these
+                as $(x, y, w, h)$:
+                <ul>
+                    <li>$x$: The x-coordinate of the top-left corner.</li>
+                    <li>$y$: The y-coordinate of the top-left corner.</li>
+                    <li>$w$: The width of the rectangle.</li>
+                    <li>$h$: The height of the rectangle.</li>
+                </ul>
+            </li>
+            <li><b>Calculate the Center:</b> The center coordinate $(c_x, c_y)$ is then calculated using simple
+                arithmetic:</li>
+        </ol>
+        </p>
+        <div class="math-block">
+            $c_x = x + \lfloor \frac{w}{2} \rfloor$ <br><br>
+            $c_y = y + \lfloor \frac{h}{2} \rfloor$
+        </div>
+        <p>
+            This point $(c_x, c_y)$ is then used as the final coordinate for the detected object in that frame. While
+            less precise than calculating the true centroid (center of mass) using image moments, this method is
+            significantly faster. For a small, roughly convex object like a fly, the difference between the bounding box
+            center and the true centroid is typically negligible, making this an excellent trade-off between speed and
+            accuracy for this application.
+        </p>
+    </div>
+</body>
+
+</html>

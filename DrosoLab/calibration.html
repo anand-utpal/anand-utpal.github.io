@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manual: ROI Calibration Tool</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .a4-container {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2cm;
+            margin: 1cm auto;
+            border: 1px #D3D3D3 solid;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Georgia', serif;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24pt;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 1.5em;
+        }
+
+        h2 {
+            font-size: 18pt;
+            margin-top: 1.5em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 14pt;
+            margin-top: 1.2em;
+            color: #444;
+        }
+
+        p,
+        li {
+            font-size: 12pt;
+            text-align: justify;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        strong,
+        b {
+            color: #000;
+        }
+
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 10px 15px;
+            margin: 1em 0;
+        }
+
+        .code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #eef;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        @media print {
+
+            body,
+            .a4-container {
+                margin: 0;
+                box-shadow: none;
+                border: none;
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a4-container">
+        <h1>User Manual: ROI Calibration Tool</h1>
+
+        <h2>1. Overview 🗺️</h2>
+        <p>
+            The <strong>ROI Calibration Tool</strong> is a specialized application designed for the precise creation,
+            editing, and saving of complex Region of Interest (ROI) layouts. These layouts are intended for use in
+            subsequent computer vision tasks, such as object tracking or activity analysis. The tool provides a powerful
+            graphical interface to draw ROIs, correct for camera perspective, and calibrate pixel dimensions to
+            real-world units, all on a live camera feed or a static image.
+        </p>
+        <p>
+            The interface is composed of a <strong>Control Panel</strong> on the left and an interactive <strong>Image
+                View</strong> on the right.
+        </p>
+
+        <hr>
+
+        <h2>2. Core Controls & File Operations 📂</h2>
+        <p>The top section of the Control Panel houses the most essential actions for managing your workflow.</p>
+        <ul>
+            <li><b>Undo (Ctrl+Z) / Redo (Ctrl+Y):</b> These buttons allow you to step backward and forward through your
+                recent actions. The tool supports up to 50 levels of undo, making it safe to experiment with complex
+                edits.</li>
+            <li><b>Exit (Esc):</b> Closes the application. The camera resource is automatically released.</li>
+            <li><b>Save ROI:</b> Opens a dialog to save your current layout.
+                <div class="note"><b>Important:</b> This action saves <strong>two separate JSON files</strong> from a
+                    single save action:
+                    <ul>
+                        <li><code class="code">filename_normal.json</code>: Contains the exact ROI column data as drawn.
+                            This is typically used for tracking.</li>
+                        <li><code class="code">filename_distances.json</code>: A version of the ROIs where each row is
+                            treated as a separate entity, with a vertical gap applied between them (as defined in the
+                            "V-Gap Settings"). This is useful for certain analysis types.</li>
+                    </ul>
+                </div>
+            </li>
+            <li><b>Load ROI:</b> Opens a dialog to load a previously saved <code class="code">.json</code> file,
+                restoring the ROIs, warp perspective, and distance calibration rectangles.</li>
+            <li><b>Capture Image:</b> Grabs a new frame from the currently selected camera, which then becomes the
+                background for defining your ROIs.</li>
+            <li><b>Upload Image:</b> Allows you to load a static image file (e.g., PNG, JPG) from your computer to use
+                as the background instead of a live camera feed.</li>
+        </ul>
+
+        <hr>
+
+        <h2>3. Interaction Modes 🖱️</h2>
+        <p>The "Mode" groupbox is central to the tool's functionality, changing how you interact with the Image View.
+        </p>
+        <ul>
+            <li><b>Drag Mode (Default):</b> The primary mode for creating new ROI columns. <strong>Click and
+                    drag</strong> on the image to draw a rectangle. Upon release, a dialog will ask for the desired
+                number of rows, and a new column will be created.</li>
+            <li><b>Dot Mode:</b> An alternative creation mode. <strong>Click four points</strong> on the image to define
+                the corners of a quadrilateral. After the fourth click, a dialog will ask for the number of rows, and a
+                new ROI column fitting that shape will be created. This is useful for non-rectangular areas.</li>
+            <li><b>Warp Mode:</b> Used for perspective correction. <strong>Click four points</strong> on the image that
+                should represent the corners of the entire scene (e.g., the four corners of a distorted arena). Once
+                four points are selected, the "Done" button in the "Warp Perspective" section becomes active.</li>
+            <li><b>Distance Mode:</b> Used for spatial calibration. <strong>Click four points</strong> to define a
+                rectangle. After the fourth click, the tool will prompt you to enter the real-world distance (e.g., in
+                cm) for each of the four sides of this rectangle. This data is saved with the ROI layout and can be used
+                to convert pixel movements to physical distances.</li>
+        </ul>
+
+        <hr>
+
+        <h2>4. Editing and Modifying ROIs ✏️</h2>
+        <p>Once ROI columns are created, they can be extensively modified.</p>
+
+        <h3>4.1. Editing via Buttons</h3>
+        <ul>
+            <li><b>Delete Column:</b> Deletes the currently selected column. A column is selected by clicking anywhere
+                inside it.</li>
+            <li><b>Duplicate Column:</b> Creates a copy of the selected column, offset slightly down and to the right.
+            </li>
+            <li><b>Edit Rows:</b> Opens a dialog to change the number of rows for the currently selected column,
+                automatically redistributing the row boundaries.</li>
+        </ul>
+
+        <h3>4.2. Direct Manipulation on Image View</h3>
+        <ul>
+            <li><b>Select a Column:</b> Simply click anywhere inside a column's boundary. The selected column will be
+                highlighted in red.</li>
+            <li><b>Move Corner Points:</b> Click and drag the solid <strong>red circles</strong> at the corners of a
+                selected column to resize or reshape it.</li>
+            <li><b>Adjust Row Boundaries:</b> Click and drag the horizontal <strong>orange lines</strong> to change the
+                position of individual rows.</li>
+            <li><b>Adjust Middle Lines:</b> Click and drag the vertical <strong>green lines</strong> within each row to
+                change their horizontal position.</li>
+        </ul>
+
+        <h3>4.3. Keyboard Adjustments</h3>
+        <p>A selected column can be precisely adjusted using the keyboard:</p>
+        <ul>
+            <li><b>Arrow Keys:</b> Nudge the entire selected column pixel by pixel.</li>
+            <li><b>Shift + Arrow Keys:</b> Resize the selected column by moving its edges.</li>
+        </ul>
+
+        <hr>
+
+        <h2>5. Advanced Tools & Settings 🛠️</h2>
+
+        <h3>5.1. Warp Perspective</h3>
+        <ul>
+            <li><b>Done:</b> After selecting four points in "Warp Mode," click this button to apply the perspective
+                transformation. The entire image will be warped, and all existing ROI coordinates will be recalculated
+                to match the new perspective.</li>
+            <li><b>Reset Warp:</b> Removes <i>all</i> applied warp transformations, reverting the image and all ROIs to
+                their original, pre-warp state.</li>
+        </ul>
+
+        <h3>5.2. Camera Settings</h3>
+        <ul>
+            <li><b>Camera Index:</b> A dropdown to switch between connected cameras. The application will re-initialize
+                the camera when a new index is chosen.</li>
+            <li><b>Exposure:</b> A slider to manually adjust the camera's exposure, allowing you to brighten or darken
+                the live image.</li>
+        </ul>
+
+        <h3>5.3. V-Gap Settings</h3>
+        <ul>
+            <li><b>Vertical Gap (pixels):</b> A spinbox to set a pixel value for a vertical gap. This value is used only
+                when saving the <code class="code">_distances.json</code> file, where it creates a buffer space between
+                the rows of each column.</li>
+        </ul>
+
+        <hr>
+
+        <h2>6. Information & Display 🖼️</h2>
+        <ul>
+            <li><b>Instructions:</b> A small panel with quick reminders of the main interaction controls.</li>
+            <li><b>Distance Information:</b> This panel displays the pixel coordinates and corresponding real-world
+                distances for any "Distance Rectangles" you have defined, providing a quick reference for your
+                calibration setup.</li>
+            <li><b>Image View Controls:</b>
+                <ul>
+                    <li><b>Zoom:</b> Hold <strong>Ctrl</strong> and use the <strong>mouse wheel</strong> to zoom in and
+                        out. The view zooms towards your mouse pointer.</li>
+                    <li><b>Pan:</b> When zoomed in, <strong>click and drag</strong> with the mouse to move around the
+                        image.</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

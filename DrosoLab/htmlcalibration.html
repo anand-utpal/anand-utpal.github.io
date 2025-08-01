@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manual: Interactive ROI Calibration & Data Visualization Tool</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .a4-container {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2cm;
+            margin: 1cm auto;
+            border: 1px #D3D3D3 solid;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Georgia', serif;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24pt;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 1.5em;
+        }
+
+        h2 {
+            font-size: 18pt;
+            margin-top: 1.5em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 14pt;
+            margin-top: 1.2em;
+            color: #444;
+        }
+
+        p,
+        li {
+            font-size: 12pt;
+            text-align: justify;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        strong,
+        b {
+            color: #000;
+        }
+
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 10px 15px;
+            margin: 1em 0;
+        }
+
+        .code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #eef;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        @media print {
+
+            body,
+            .a4-container {
+                margin: 0;
+                box-shadow: none;
+                border: none;
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a4-container">
+        <h1>User Manual: Interactive ROI Calibration & Data Visualization Tool</h1>
+
+        <h2>1. Overview & Purpose 🎯</h2>
+        <p>
+            This tool is an advanced, web-based utility for the <strong>post-processing and calibration of experimental
+                data</strong>. Its primary purpose is to visualize large sets of coordinate data collected from tracking
+            experiments and allow a user to interactively draw, edit, and validate Regions of Interest (ROIs) directly
+            on top of this data.
+        </p>
+        <p>
+            By plotting the actual recorded positions of subjects, you can ensure that your defined ROIs are accurate,
+            identify areas with unexpected activity (e.g., from stray flies or set up movement), and filter out noise to
+            reveal true movement patterns. This serves as a critical verification step between data collection and final
+            analysis.
+        </p>
+
+        <hr>
+
+        <h2>2. Getting Started: Loading Your Data 📂</h2>
+        <p>The first step is to load your experimental results and any existing ROI definitions.</p>
+        <ul>
+            <li>
+                <strong>Load Data File (.json/.db):</strong> This is for loading the raw coordinate data from your
+                experiment. The tool supports two formats:
+                <ul>
+                    <li><code class="code">.json</code>: A standard JSON file containing coordinate data.</li>
+                    <li><code class="code">.db</code>: An SQLite database file. The tool will process this file
+                        <strong>entirely within your browser</strong> to extract the coordinates, offering a powerful
+                        way to work with large datasets without needing a separate database program.</li>
+                </ul>
+            </li>
+            <li>
+                <strong>Load ROI Data:</strong> This button is used to load a previously created ROI layout file (in
+                <code class="code">.json</code> format). This allows you to superimpose an existing ROI structure onto
+                your newly loaded experimental data to check for alignment and make adjustments.
+            </li>
+        </ul>
+
+        <hr>
+
+        <h2>3. Visualizing and Filtering Data 📊</h2>
+        <p>Once loaded, the experimental data is displayed as a scatter plot. The tool provides powerful filtering
+            capabilities to help you distinguish signal from noise.</p>
+
+        <h3>3.1. The Scatter Plot</h3>
+        <p>
+            Each blue dot on the plot represents a unique coordinate where a subject was detected during the experiment.
+            The plot is fully interactive: you can <strong>pan</strong> by clicking and dragging and
+            <strong>zoom</strong> using the mouse wheel.
+        </p>
+
+        <h3>3.2. Noise and Disturbance Filtering</h3>
+        <div class="note">
+            <strong>Key Feature:</strong> The "Min Occurrences" filter is the most important tool for cleaning your
+            visualization.
+        </div>
+        <ul>
+            <li><strong>Min Occurrences Input:</strong> This number sets a threshold for how many times a coordinate
+                must have been recorded to be displayed on the plot.
+                <ul>
+                    <li>A <strong>low value (e.g., 1)</strong> will show <i>all</i> recorded data points. This is useful
+                        for seeing the full extent of movement, but will likely include noise, sensor artifacts, or
+                        brief movements from stray flies.</li>
+                    <li>A <strong>high value (e.g., 10 or more)</strong> will filter out these sparse, infrequent
+                        points. This cleans the plot, revealing only the core areas of consistent activity where the
+                        subject(s) spent significant time.</li>
+                </ul>
+            </li>
+            <li><strong>Apply Threshold Button:</strong> After changing the "Min Occurrences" value, click this button
+                to re-render the plot with the new filter applied. This allows you to iteratively clean your data view
+                to ensure your ROIs are drawn around meaningful activity.</li>
+        </ul>
+
+        <hr>
+
+        <h2>4. Creating and Managing ROIs ✏️</h2>
+        <p>The control bar provides a full suite of tools for managing your ROI layouts.</p>
+        <ul>
+            <li><strong>Save ROI Data:</strong> Opens a file dialog to save the current set of ROIs as a new <code
+                    class="code">roi_data.json</code> file.</li>
+            <li><strong>Clear All ROIs:</strong> Removes all ROI rectangles from the canvas.</li>
+            <li><strong>Delete Selected ROI:</strong> Deletes the currently selected ROI (highlighted in cyan).</li>
+            <li><strong>Duplicate Selected ROI:</strong> Creates an exact copy of the selected ROI and places it just
+                below the original, making it easy to create grids of identical arenas.</li>
+        </ul>
+
+        <h3>4.1. ROI Structure: Columns and Rows</h3>
+        <p>Each ROI is a "column" that can be subdivided into rows and sub-columns.</p>
+        <ul>
+            <li><strong>Rows Input & Apply Rows Button:</strong> To change the number of horizontal divisions in the
+                selected ROI, enter a new number in the "Rows" input box and click "Apply Rows".</li>
+            <li><strong>Add / Remove Column Buttons:</strong> These buttons control the number of vertical "middle
+                lines" within a selected ROI. "Add Column" inserts a new line, evenly spacing them, while "Remove
+                Column" deletes the last one added.</li>
+            <li><strong>Reset Columns Button:</strong> Removes all vertical middle lines from the selected ROI, leaving
+                only a single, centered line.</li>
+        </ul>
+
+        <hr>
+
+        <h2>5. Interactive ROI Editing on the Plot ✍️</h2>
+        <p>The primary power of the tool lies in its direct manipulation capabilities.</p>
+        <ul>
+            <li><strong>Drawing a New ROI:</strong> Hold down the <strong>Shift</strong> key, then <strong>click and
+                    drag</strong> on the plot to draw a new rectangular ROI.</li>
+            <li><strong>Selecting an ROI:</strong> Simply <strong>click</strong> inside any ROI. It will turn from
+                orange to bright cyan to indicate it is selected and ready for editing.</li>
+            <li><strong>Moving an ROI:</strong> <strong>Click and drag</strong> anywhere inside the body of a selected
+                ROI to move it.</li>
+            <li><strong>Resizing an ROI:</strong> <strong>Click and drag</strong> the square "handles" on the corners
+                and edges of a selected ROI to resize it.</li>
+            <li><strong>Adjusting Internal Lines:</strong> You can drag the dashed internal lines of a selected ROI.
+                Drag a <strong>horizontal line</strong> to adjust a row boundary, or drag a <strong>vertical
+                    line</strong> to adjust a sub-column position.</li>
+            <li><strong>Nudging with Keyboard:</strong> For fine-grained control, select an ROI and use the
+                <strong>arrow keys</strong> on your keyboard to nudge it one pixel at a time.</li>
+        </ul>
+
+        <hr>
+
+        <h2>6. Output and Status 🖥️</h2>
+        <ul>
+            <li><strong>ROI Status:</strong> This text next to the control buttons provides at-a-glance information,
+                telling you how many ROIs are present and which one is currently selected.</li>
+            <li><strong>ROI Data JSON Textbox:</strong> The large text area at the bottom of the page displays a live,
+                read-only view of the complete ROI data structure in JSON format. This is useful for developers or for
+                quickly inspecting the raw data being generated.</li>
+        </ul>
+
+    </div>
+</body>
+
+</html>

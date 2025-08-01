@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manual: ROI Labeler & Visual Verification Tool</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .a4-container {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2cm;
+            margin: 1cm auto;
+            border: 1px #D3D3D3 solid;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Georgia', serif;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24pt;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 1.5em;
+        }
+
+        h2 {
+            font-size: 18pt;
+            margin-top: 1.5em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        p,
+        li {
+            font-size: 12pt;
+            text-align: justify;
+        }
+
+        ol {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        strong,
+        b {
+            color: #000;
+        }
+
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 10px 15px;
+            margin: 1em 0;
+        }
+
+        .code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #eef;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        @media print {
+
+            body,
+            .a4-container {
+                margin: 0;
+                box-shadow: none;
+                border: none;
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a4-container">
+        <h1>User Manual: ROI Labeler & Visual Verification Tool</h1>
+
+        <h2>1. Overview & Purpose 🗺️</h2>
+        <p>
+            The <strong>ROI Labeler</strong> is a visual utility designed to bridge the gap between your experimental
+            data and the physical setup. After running an analysis, you have data files (e.g., <code
+                class="code">sorted_output.csv</code>) where each subject is identified by a number (Fly 1, Fly 2,
+            etc.). This tool allows you to load an image from that experiment and overlay the numbered Regions of
+            Interest (ROIs) on top of it.
+        </p>
+        <p>
+            Its primary purpose is <strong>ground truthing and verification</strong>. By generating a labeled image, you
+            can create a definitive visual key that confirms exactly which physical arena corresponds to which fly
+            number in your final datasets, ensuring the integrity of your analysis.
+        </p>
+
+        <hr>
+
+        <h2>2. The User Interface & Workflow 🖥️</h2>
+        <p>The application provides a simple, step-by-step process for generating your labeled image.</p>
+
+        <ol>
+            <li>
+                <strong>Upload Image:</strong>
+                <p>Click this button to select a representative image from your experiment. This should be a clear photo
+                    of the experimental setup (e.g., from the <code class="code">captured</code> folder) that shows all
+                    the arenas.</p>
+            </li>
+            <li>
+                <strong>Upload JSON:</strong>
+                <p>Click this button to select the corresponding <code class="code">.json</code> file that contains the
+                    ROI definitions for this experiment.</p>
+            </li>
+            <li>
+                <strong>Select Fly Numbering Order:</strong>
+                <p>This dropdown is crucial for ensuring the labels match your analysis. You must select the
+                    <strong>same numbering scheme</strong> that you used in the "Fly Tracking Analysis" tool:</p>
+                <ul>
+                    <li><strong>Normal (Top-Left to Bottom-Right):</strong> Standard reading order.</li>
+                    <li><strong>Reverse (Bottom-Right to Top-Left):</strong> The opposite order.</li>
+                </ul>
+                <div class="note">
+                    <strong>Note:</strong> Once both an image and a JSON file are loaded, the tool will automatically
+                    process them and draw the numbered ROIs on the image. You can change the numbering order at any
+                    time, and the labels will be redrawn instantly.
+                </div>
+            </li>
+            <li>
+                <strong>Save Labeled Image:</strong>
+                <p>After you are satisfied with the labeled image, click this button to save it as a <code
+                        class="code">.png</code> file. This image serves as your permanent visual record and reference
+                    key.
+            </li>
+        </ol>
+
+        <hr>
+
+        <h2>3. Interactive Image Viewer 🖼️</h2>
+        <p>The image display is interactive, allowing you to inspect the ROIs closely.</p>
+        <ul>
+            <li><strong>Zoom:</strong> Use the <strong>mouse wheel</strong> to zoom in and out of the image.</li>
+            <li><strong>Pan:</strong> <strong>Click and drag</strong> with the left mouse button to pan across the
+                zoomed-in image.</li>
+        </ul>
+
+        <hr>
+
+        <h2>4. The Numbering Logic Explained 🔢</h2>
+        <p>
+            The tool uses the exact same sorting logic as the main analysis application to guarantee that the numbers on
+            the image match the numbers in the data files.
+        </p>
+
+        <h4>Normal Order (Top-Left to Bottom-Right)</h4>
+        <ol>
+            <li><b>Group by Column:</b> ROIs are grouped by their horizontal position (similar 'left' coordinate).</li>
+            <li><b>Sort Groups:</b> These groups are sorted from <strong>left to right</strong>.</li>
+            <li><b>Sort Within Groups:</b> ROIs within each group are sorted from <strong>top to bottom</strong>.</li>
+            <li><b>Assign Numbers:</b> The tool iterates through this sorted list, drawing the numbers (1, 2, 3, ...) on
+                each ROI cell in sequence.</li>
+        </ol>
+
+        <h4>Reverse Order (Bottom-Right to Top-Left)</h4>
+        <ol>
+            <li><b>Group by Column:</b> ROIs are grouped by their 'right' coordinate.</li>
+            <li><b>Sort Groups:</b> Groups are sorted from <strong>right to left</strong>.</li>
+            <li><b>Sort Within Groups:</b> ROIs are sorted from <strong>bottom to top</strong>.</li>
+            <li><b>Assign Numbers:</b> Numbers are assigned to this reverse-sorted list.</li>
+        </ol>
+
+        <hr>
+
+        <h2>5. The Final Output ✅</h2>
+        <p>
+            The output of this tool is a single <strong>PNG image file</strong>. This image shows your experimental
+            setup with each individual ROI cell clearly outlined in green and labeled with its corresponding fly number
+            in red. This file is invaluable as a reference when interpreting your final data, allowing you to instantly
+            connect a data column like <code class="code">fly15_distance</code> to the exact physical location of Fly 15
+            in your experiment.
+        </p>
+    </div>
+</body>
+
+</html>

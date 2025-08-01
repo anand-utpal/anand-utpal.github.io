@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology for Fly Activity & Desiccation Analysis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d9488;
+            /* Teal */
+            --secondary-color: #475569;
+            /* Slate */
+            --accent-color: #f43f5e;
+            /* Rose */
+            --background-color: #f8fafc;
+            --surface-color: #ffffff;
+            --text-color: #334155;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            margin: 0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            background: var(--surface-color);
+            padding: 2rem 3rem;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        header h1 {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-color);
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            color: var(--secondary-color);
+            margin-top: 0.5rem;
+            font-weight: 300;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header .icon {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            display: grid;
+            place-items: center;
+            background-color: #ecfeff;
+            color: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .section-header h2 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .section-header h2 span {
+            display: block;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--secondary-color);
+        }
+
+        .info-box {
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 12px;
+            border-width: 1px;
+            border-style: solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .info-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+
+        .info-box.problem {
+            background-color: #fff1f2;
+            border-color: #ffe4e6;
+        }
+
+        .info-box.problem::before {
+            background-color: var(--accent-color);
+        }
+
+        .info-box.problem strong {
+            color: #be123c;
+        }
+
+        .info-box.solution {
+            background-color: #f0fdfa;
+            border-color: #ccfbf1;
+        }
+
+        .info-box.solution::before {
+            background-color: var(--primary-color);
+        }
+
+        .info-box.solution strong {
+            color: #0f766e;
+        }
+
+        .info-box strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .illustration {
+            text-align: center;
+            margin: 2.5rem 0;
+            padding: 2rem;
+            background-color: #f8fafc;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .illustration-caption {
+            font-style: italic;
+            color: var(--secondary-color);
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        code {
+            background-color: #e2e8f0;
+            color: #475569;
+            padding: 0.2em 0.4em;
+            border-radius: 6px;
+            font-family: "Fira Code", "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--border-color);
+            margin: 4rem 0;
+        }
+
+        ol li {
+            margin-bottom: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <h1>Fly Activity & Desiccation Analysis</h1>
+            <p>A Refined Methodological Framework</p>
+        </header>
+
+        <main>
+
+            <!-- SECTION 1: The Initial Hurdles -->
+            <section id="challenge">
+                <div class="section-header">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path>
+                            <line x1="12" x2="12" y1="9" y2="13"></line>
+                            <line x1="12" x2="12.01" y1="17" y2="17"></line>
+                        </svg>
+                    </div>
+                    <h2>Initial Hurdles <span>Defining the Core Problems</span></h2>
+                </div>
+                <p>
+                    Our primary goal is to reliably track fly movement over time. However, two fundamental challenges
+                    must be addressed before any meaningful analysis can occur.
+                </p>
+                <div class="info-box problem">
+                    <strong>1. Failed Detections & Insignificant Movement:</strong> The system must differentiate
+                    between true locomotor activity and minor positional noise. A failed detection or a movement smaller
+                    than a set threshold (e.g., <code>x+y < z</code>) can either be insignificant or a critical data
+                    gap.
+                </div>
+                <div class="info-box problem">
+                    <strong>2. Dual-Camera Disparity:</strong> To ensure robust tracking, we employ a two-camera system.
+                    This inevitably introduces disparity, where each camera provides a slightly different coordinate for
+                    the same fly due to its unique point of view. This must be reconciled.
+                </div>
+            </section>
+
+            <hr>
+
+            <!-- SECTION 2: Data Processing -->
+            <section id="quantifying-activity">
+                <div class="section-header">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 20V10"></path>
+                            <path d="M18 20V4"></path>
+                            <path d="M6 20V16"></path>
+                        </svg>
+                    </div>
+                    <h2>Data Processing <span>From Raw Coordinates to Activity Scores</span></h2>
+                </div>
+                <p>
+                    To create a consistent metric, we first convert the raw stream of timestamped coordinate data into a
+                    structured measure of activity. This involves segmenting the data into discrete **1-minute
+                    intervals** and aggregating the movements within each block. This process effectively smooths out
+                    minor, insignificant jitters and provides a clear, periodic activity score.
+                </p>
+                <div class="info-box solution">
+                    <strong>Result:</strong> This method provides a baseline for locomotor activity. By normalizing the
+                    data from both cameras, we confirmed that the disparity introduces only a **1-4%** variance, which
+                    is an acceptable margin for our analysis.
+                </div>
+            </section>
+
+            <hr>
+
+            <!-- SECTION 3: The Critical Question -->
+            <section id="inactivity-detection">
+                <div class="section-header">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                            <path d="M12 17h.01"></path>
+                        </svg>
+                    </div>
+                    <h2>The Critical Question <span>Distinguishing Rest from Death</span></h2>
+                </div>
+                <p>
+                    The most challenging aspect of this research is determining the precise moment a fly ceases all
+                    vital movement, which is essential for calculating desiccation time. A fly can remain motionless for
+                    long periods while resting, making it difficult to distinguish from one that has perished. Our
+                    methodology for this has evolved significantly.
+                </p>
+
+                <h3>Legacy Method: Standard Deviation</h3>
+                <p>
+                    Our initial approach was to analyze the recent history of movement. After a fly registered **~15
+                    minutes of non-zero locomotor activity**, we would examine the standard deviation of its
+                    coordinates. A low standard deviation suggested immobility.
+                </p>
+                <div class="info-box problem">
+                    <strong>Limitation:</strong> This method was susceptible to drift and could be computationally
+                    intensive, sometimes failing to clearly distinguish subtle, life-indicating movements from sensor
+                    noise.
+                </div>
+
+                <h3>Current Method: Mode-Based Thresholding</h3>
+                <p>
+                    We have implemented a more direct and robust algorithm that relies on the **mode**—the most
+                    frequently occurring position—as a stable reference point for the fly's "home base."
+                </p>
+                <div class="info-box solution">
+                    <strong>The New Algorithm:</strong>
+                    <ol>
+                        <li><strong>Establish a Baseline:</strong> Look back at the recent history of the fly's
+                            x-coordinates to determine the <strong>mode</strong> (its most common resting spot).</li>
+                        <li><strong>Compare Current Position:</strong> Take the fly's current x-coordinate and measure
+                            its distance from the calculated mode.</li>
+                        <li><strong>Apply Threshold:</strong> If the absolute difference is greater than a set threshold
+                            (e.g., <strong>4 pixels</strong>), the movement is considered <strong>significant and
+                                vital</strong>. The process continues.</li>
+                        <li><strong>Confirm Immobility:</strong> If the difference is within the threshold
+                            (<code>|current_x - mode_x| <= 4</code>), the 'movement' is dismissed as noise. This check
+                            is performed repeatedly to confirm a true state of immobility.</li>
+                    </ol>
+                </div>
+                <div class="illustration">
+                    <svg width="100%" height="200" viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg">
+                        <title>Illustration of Mode-Based Thresholding</title>
+                        <!-- Axis Line -->
+                        <line x1="20" y1="150" x2="480" y2="150" stroke="#94a3b8" stroke-width="1.5" />
+                        <text x="450" y="170" font-family="Inter" font-size="12" fill="#64748b">x-coordinate</text>
+
+                        <!-- Mode Cluster -->
+                        <g>
+                            <circle cx="150" cy="150" r="4.5" fill="#0ea5e9" opacity="0.7" />
+                            <circle cx="155" cy="150" r="4.5" fill="#0ea5e9" opacity="0.7" />
+                            <circle cx="148" cy="150" r="4.5" fill="#0ea5e9" opacity="0.7" />
+                            <circle cx="152" cy="150" r="4.5" fill="#0ea5e9" opacity="0.7" />
+                            <text x="120" y="120" font-family="Poppins" font-size="14" fill="#0284c7"
+                                font-weight="600">Mode Position</text>
+                            <line x1="151" y1="125" x2="151" y2="145" stroke="#0ea5e9" stroke-width="1" />
+                        </g>
+
+                        <!-- Threshold Zone -->
+                        <rect x="111" y="140" width="80" height="20" fill="#ccfbf1" rx="10" />
+                        <text x="100" y="90" font-family="Inter" font-size="12" fill="#0f766e">Threshold Zone
+                            (±4px)</text>
+                        <path d="M111 145 C 101 130, 101 100, 111 95" stroke="#14b8a6" stroke-width="1" fill="none" />
+                        <path d="M191 145 C 201 130, 201 100, 191 95" stroke="#14b8a6" stroke-width="1" fill="none" />
+
+                        <!-- Point Inside (Insignificant) -->
+                        <g>
+                            <circle cx="170" cy="150" r="5" fill="#10b981" />
+                            <text x="140" y="40" font-family="Inter" font-size="12" fill="#059669">New Position:
+                                Insignificant</text>
+                            <line x1="170" y1="50" x2="170" y2="145" stroke="#10b981" stroke-width="1.5"
+                                stroke-dasharray="3,3" />
+                        </g>
+
+                        <!-- Point Outside (Significant) -->
+                        <g>
+                            <circle cx="350" cy="150" r="5" fill="#f43f5e" />
+                            <text x="320" y="40" font-family="Inter" font-size="12" fill="#be123c" font-weight="600">New
+                                Position: SIGNIFICANT</text>
+                            <line x1="350" y1="50" x2="350" y2="145" stroke="#f43f5e" stroke-width="1.5"
+                                stroke-dasharray="3,3" />
+                        </g>
+                    </svg>
+                    <p class="illustration-caption">The fly's current position is compared against its most common
+                        resting spot (the mode). Only movements that cross the 4-pixel threshold are considered true
+                        activity.</p>
+                </div>
+            </section>
+
+            <hr>
+
+            <!-- SECTION 4: Conclusion -->
+            <section id="conclusion">
+                <div class="section-header">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h2>Conclusion <span>A Robust and Reliable Model</span></h2>
+                </div>
+                <p>
+                    By evolving our methodology from standard deviation to the more direct and accurate **mode-based
+                    thresholding**, we have built a highly reliable model. This new framework successfully filters out
+                    positional noise and confidently identifies the true cessation of movement.
+                </p>
+                <p>
+                    Our analysis confirms that for **80-85% of flies**, the data is clean and consistent, allowing for
+                    an accurate calculation of desiccation time. This robust methodology forms a solid foundation for
+                    our subsequent biological conclusions.
+                </p>
+            </section>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

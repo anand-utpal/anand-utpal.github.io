@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Manual: Fly Detection System Interface</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .a4-container {
+            width: 21cm;
+            min-height: 29.7cm;
+            padding: 2cm;
+            margin: 1cm auto;
+            border: 1px #D3D3D3 solid;
+            background: white;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Georgia', serif;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24pt;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+            margin-bottom: 1.5em;
+        }
+
+        h2 {
+            font-size: 18pt;
+            margin-top: 1.5em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        h3 {
+            font-size: 14pt;
+            margin-top: 1.2em;
+            color: #444;
+        }
+
+        p,
+        li {
+            font-size: 12pt;
+            text-align: justify;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        strong,
+        b {
+            color: #000;
+        }
+
+        .note {
+            background-color: #e8f4fd;
+            border-left: 4px solid #2196F3;
+            padding: 10px 15px;
+            margin: 1em 0;
+        }
+
+        .code {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #eef;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        @media print {
+
+            body,
+            .a4-container {
+                margin: 0;
+                box-shadow: none;
+                border: none;
+                background: white;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="a4-container">
+        <h1>User Manual: The Fly Detection System Interface</h1>
+
+        <h2>1. Overview</h2>
+        <p>
+            The Fly Detection System is a graphical application designed for configuring, running, and monitoring
+            behavioral experiments on *Drosophila*. It provides a user-friendly interface to control camera settings,
+            define detection parameters, and manage data logging without requiring direct code interaction. This manual
+            details the function of each component within the user interface.
+        </p>
+        <p>
+            The interface is divided into two main sections: a <b>control panel</b> on the left for all settings and
+            monitoring, and a <b>video display panel</b> on the right for visual feedback.
+        </p>
+
+        <hr style="margin: 2em 0;">
+
+        <h2>2. The Control Panel (Left Side)</h2>
+        <p>This panel contains all the controls for setting up and running an experiment.</p>
+
+        <h3>2.1. Status Indicators</h3>
+        <p>Located at the very top, these provide an at-a-glance summary of the system's state.</p>
+        <ul>
+            <li><b>Experiment Status:</b> Shows whether an experiment is currently <b style="color: green;">Running</b>
+                or <b style="color: red;">Stopped</b>.</li>
+            <li><b>Camera Status:</b> Indicates if the selected camera is <b style="color: green;">Connected</b> and
+                providing frames, or <b style="color: red;">Disconnected</b>.</li>
+        </ul>
+
+        <h3>2.2. Experiment Configuration</h3>
+        <p>This section defines the high-level parameters for the experiment's setup and data storage.</p>
+        <ul>
+            <li><b>Camera Index:</b> A dropdown menu to select the physical camera to use. In systems with multiple
+                cameras, indices usually start from 0.</li>
+            <li><b>Experiment Folder Name:</b> A text field to name the experiment. All data (images, logs, database)
+                will be saved in a subfolder with this name inside the <code class="code">experiments</code> directory.
+                By default, it is populated with a timestamp (e.g., <code
+                    class="code">experiment_20250718_235414</code>) to ensure unique names and prevent accidental data
+                overwriting.</li>
+            <li><b>Frame Update Interval (seconds):</b> Sets the target delay between processing consecutive frames. A
+                value of <code class="code">0.1</code> targets 10 frames per second (FPS). Lower values increase the FPS
+                but also increase CPU load.</li>
+            <li><b>Image Capture Interval (seconds):</b> Controls how often high-resolution images are saved to disk.
+                This is independent of the frame processing rate. A value of <code class="code">60</code> saves one set
+                of images every minute.</li>
+            <li><b>Experiment Mode:</b>
+                <ul>
+                    <li><b>Manual:</b> The experiment starts when the "Start" button is pressed and runs indefinitely
+                        until the "Stop" button is pressed.</li>
+                    <li><b>Automatic:</b> The experiment runs for a specific duration. When selected, input fields for
+                        <b>Hours</b> and <b>Minutes</b> appear, allowing you to define the runtime.</li>
+                </ul>
+            </li>
+            <li><b>Image Saving Options:</b>
+                <ul>
+                    <li><b>Save Real Images:</b> Checkbox to save the raw, original frames from the camera.</li>
+                    <li><b>Save Processed Images:</b> Checkbox to save the frames after processing, including visual
+                        overlays like detected object boxes and ROI outlines.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>2.3. Detection Parameters</h3>
+        <p>This section allows for fine-tuning the core motion detection algorithm.</p>
+        <ul>
+            <li><b>Lock Parameters Button:</b> A critical safety feature.
+                <ul>
+                    <li><b>Unlocked (Default):</b> The sliders are active, allowing you to adjust parameters and see
+                        their effect in real-time (ideal for setup).</li>
+                    <li><b>Locked:</b> The sliders are disabled. This "locks in" the current settings for the duration
+                        of the experiment, ensuring consistency. If you attempt to start an experiment without locking,
+                        the system will prompt you to confirm the use of default values.</li>
+                </ul>
+            </li>
+            <li><b>Parameter Sliders:</b>
+                <ul>
+                    <li><b>Min/Max Area:</b> These sliders define the valid size range for a detected object. Contours
+                        with a pixel area smaller than <b>Min Area</b> or larger than <b>Max Area</b> are discarded.
+                        This is the primary filter for eliminating noise and other artifacts.</li>
+                    <li><b>MOG2 History:</b> Controls the number of past frames used to build the background model.
+                        Higher values create a more stable but slower-adapting model.</li>
+                    <li><b>MOG2 VarThreshold:</b> Sets the sensitivity for detecting changes. A higher value requires a
+                        larger difference between a pixel and the background model to be considered foreground, making
+                        it less sensitive to noise but also potentially missing subtle movements.</li>
+                    <li><b>Exposure:</b> Adjusts the camera's exposure level. This is a manual control that directly
+                        affects image brightness.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>2.4. File I/O, Controls, and Monitoring</h3>
+        <p>This final section of the control panel contains action buttons and real-time data displays.</p>
+        <ul>
+            <li><b>Upload ROI JSON (Optional):</b> Opens a file dialog to load a <code class="code">.json</code> file.
+                This file can define specific Regions of Interest (ROIs) for analysis and provide four "warp points" for
+                correcting perspective distortion in the camera feed.</li>
+            <li><b>Start/Stop Experiment Buttons:</b>
+                <ul>
+                    <li><b>Start Experiment:</b> Initiates the experiment after performing safety checks. It creates the
+                        data folders, logs the parameters, and starts the processing thread. This button is disabled
+                        while an experiment is running.</li>
+                    <li><b>Stop Experiment:</b> Safely terminates the running experiment, saves all pending data, and
+                        releases the camera. This button is only enabled during an experiment.</li>
+                </ul>
+            </li>
+            <li><b>Save and Exit Button:</b> Stops any running experiment and closes the application.</li>
+            <li><b>Latest Database Entry:</b> A text box that displays the most recent coordinate data written to the
+                SQLite database, providing real-time confirmation of data logging.</li>
+            <li><b>Latest Log Entry:</b> A text box showing the last message written to the experiment's log file. This
+                is useful for monitoring the system's status and diagnosing errors.</li>
+        </ul>
+
+        <hr style="margin: 2em 0;">
+
+        <h2>3. The Video Display Panel (Right Side)</h2>
+        <p>This panel provides the primary visual feedback from the camera and the detection algorithm.</p>
+        <ul>
+            <li><b>Image View:</b> Displays the processed video stream. It shows the camera feed with several graphical
+                overlays:
+                <ul>
+                    <li><b style="color: green;">Green Rectangles:</b> Outlines of the Regions of Interest (ROIs) loaded
+                        from the JSON file.</li>
+                    <li><b style="color: red;">Red Rectangles:</b> Bounding boxes drawn around each detected moving
+                        object that passes the filtering criteria.</li>
+                    <li><b>Text Labels:</b> Coordinates and fly numbers displayed next to the detected objects.</li>
+                </ul>
+            </li>
+            <li><b>Interactive Controls:</b> The view is fully interactive to allow for detailed inspection.
+                <ul>
+                    <li><b>Zoom:</b> Hold the <b>Ctrl</b> key and use the <b>mouse wheel</b> to zoom in and out of the
+                        image. The zoom is centered on the mouse cursor's position.</li>
+                    <li><b>Pan:</b> When zoomed in, <b>click and drag</b> the image with the mouse to pan around the
+                        view. The cursor will change to a hand icon to indicate panning mode.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <hr style="margin: 2em 0;">
+
+        <h2>4. Advanced Features & Design Choices</h2>
+        <p>Beyond the user-facing controls, several design choices were made to ensure the application is robust, safe,
+            and performant.</p>
+
+        <h3>4.1. Safety and Anti-Crash Measures</h3>
+        <div class="note">
+            <b>Note:</b> These features work in the background to protect your data and ensure the application remains
+            stable during long experiments.
+        </div>
+        <ul>
+            <li><b>Data Overwrite Protection:</b> Before an experiment starts, the application runs a safety check
+                (<code class="code">check_folder_safety</code>) to verify that the target experiment folder and its
+                critical files (like <code class="code">coordinates.db</code>) do not already exist. This prevents the
+                accidental overwriting of data from a previous run.</li>
+            <li><b>Robust Error Handling:</b> The core processing loop is wrapped in <code
+                    class="code">try...except</code> blocks. If an error occurs during frame processing (e.g., a
+                temporary camera glitch), it is caught and written to the log file instead of crashing the entire
+                application. The experiment can often continue or be stopped gracefully.</li>
+            <li><b>Responsive GUI via Multithreading:</b> All intensive tasks—camera capture, image processing, and data
+                writing—are run in a separate background thread (<code class="code">ExperimentWorker</code>). This is
+                the most important anti-crash feature for the user experience, as it prevents the graphical interface
+                from freezing or becoming unresponsive, even when the CPU is under heavy load.</li>
+            <li><b>Camera Re-initialization:</b> The camera handler includes a retry mechanism. If it fails to capture a
+                frame, it will attempt to release and re-initialize the camera several times before declaring a critical
+                failure. This can automatically resolve temporary hardware disconnects.</li>
+            <li><b>Graceful Shutdown:</b> The "Stop" and "Exit" functions are designed to terminate the background
+                thread cleanly, ensuring all resources like the camera and database connections are properly released.
+            </li>
+        </ul>
+
+        <h3>4.2. Data Storage: The Advantages of SQLite</h3>
+        <p>The application uses an SQLite database (<code class="code">coordinates.db</code>) to store coordinate data
+            instead of a simpler format like a CSV file. This choice provides significant benefits in speed, safety, and
+            ease of use.</p>
+        <ul>
+            <li><b>Self-Contained and Portable:</b> The entire database is a single file on disk. There is no need to
+                install, configure, or run a separate database server. This makes the experiment's data completely
+                portable—you can simply copy the folder to another computer for analysis.</li>
+            <li><b>Transactional Integrity (ACID):</b> SQLite operations are <b>transactional</b>. This guarantees that
+                each data write is "atomic"—it either completes successfully or it fails completely, with no in-between
+                state. This protects the database file from corruption, even if the application crashes or the computer
+                loses power during a write operation.</li>
+            <li><b>Structured and Queryable:</b> Unlike a plain text file, a database stores data in a structured table
+                with defined data types. This allows for powerful and fast data analysis later using standard SQL
+                queries, such as selecting data from specific time ranges or filtering by ROI.</li>
+        </ul>
+
+        <h3>4.3. System Performance and "Fastness"</h3>
+        <p>The application is designed to be highly performant, enabling high-framerate tracking. This is achieved
+            through several key architectural choices.</p>
+        <ul>
+            <li><b>Multithreading:</b> As mentioned, offloading the processing to a background thread ensures the user
+                interface is always fast and responsive.</li>
+            <li><b>Optimized Core Libraries:</b> The application relies on OpenCV for all image processing tasks. These
+                functions are written in highly optimized, compiled C++ and are significantly faster for pixel-level
+                operations than pure Python code.</li>
+            <li><b>Efficient Data Handling:</b> Only essential data is passed between the processing thread and the main
+                GUI thread. For example, a resized, lower-resolution image is sent for display rather than the
+                full-sized original, minimizing data transfer overhead and ensuring a smooth video preview.</li>
+            <li><b>Fast Database Writes:</b> SQLite is highly optimized for the kind of rapid, sequential write
+                operations required by this application, often outperforming the overhead of repeatedly opening,
+                appending to, and closing a text file on many systems.</li>
+        </ul>
+
+        <hr style="margin: 2em 0;">
+        <h2>5. Conclusion</h2>
+        <p>
+            The Fly Detection System provides a powerful and flexible interface for conducting behavioral research. By
+            combining a user-friendly graphical interface with robust, behind-the-scenes safety and performance
+            features, it enables researchers to configure and run complex, long-duration experiments with confidence in
+            the stability of the application and the integrity of the collected data.
+        </p>
+    </div>
+</body>
+
+</html>
