@@ -98,73 +98,60 @@
                 background: white;
             }
         }
-        /* --- NEW MENU STYLES --- */
-.menu-container {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    z-index: 10;
-}
 
-.menu-icon {
-    cursor: pointer;
-    padding: 5px;
-}
-
-.menu-icon .bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: #555;
-    margin: 5px 0;
-}
-
-.menu-content {
-    display: none;
-    /* Hidden by default */
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #ffffff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    min-width: 180px;
-}
-
-.menu-content h4 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #1e88e5;
-}
-
-.menu-content ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: left;
-}
-
-.menu-content ul li {
-    padding: 8px 5px;
-    font-size: 14px;
-}
-
-/* Show menu on hover */
-.menu-container:hover .menu-content {
-    display: block;
-}
-        /* Show menu on hover */
-.menu-container:hover .menu-content {
-    display: block;
-}
         .menu-container {
             position: absolute;
             top: 25px;
-            /* ...and so on for all the menu CSS... */
+            left: 25px;
+            z-index: 10;
         }
-        
+
+        .menu-icon {
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-icon .bar {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: #555;
+            margin: 5px 0;
+        }
+
+        .menu-content {
+            display: none;
+            /* Hidden by default */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            min-width: 180px;
+        }
+
+        .menu-content h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #1e88e5;
+        }
+
+        .menu-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: left;
+        }
+
+        .menu-content ul li {
+            padding: 8px 5px;
+            font-size: 14px;
+        }
+
+        /* Show menu on hover */
         .menu-container:hover .menu-content {
             display: block;
         }
@@ -172,33 +159,29 @@
 </head>
 
 <body>
-    <div class="flowchart-container">
-
-        <div class="menu-container">
-            <div class="menu-icon">
-                <div class="bar"></div>
-                <div class="bar"></div>
-                <div class="bar"></div>
-            </div>
-            <div class="menu-content">
-                <h4>Contents</h4>
-                <ul>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/coverpage.html">Chapter 1: Cover Page</a></li>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/main.html">Chapter 2: Framework</a></li>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/page1.html">Chapter 3: Tracking Principles</a></li>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/funtionsmain.html">Chapter 4: Experimental Interface</a></li>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/calibration.html">Chapter 5: Calibration on Image</a></li>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/htmlcalibration.html">Chapter 6: Calibration on Data</a></li>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/analysis.html">Chapter 7: Analysis</a></li>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/plottingapp.html">Chapter 8: Plotting App</a></li>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/labeledroi.html">Chapter 9: Labeling ROI</a></li>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/videomaking.html">Chapter 10: Video Making</a></li>
-                    <li><a href="https://theutpalanand.github.io/DrosoLab/error%20and%20working.html">Chapter 11: Error and Working</a></li>
-                </ul>
-            </div>
+    <div class="menu-container">
+        <div class="menu-icon">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
         </div>
-
+        <div class="menu-content">
+            <h4>Contents</h4>
+            <ul>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/coverpage.html">Chapter 1: Cover Page</a></li>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/main.html">Chapter 2: Framework</a></li>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/page1.html">Chapter 3: Tracking Principles</a></li>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/funtionsmain.html">Chapter 4: Experimental Interface</a></li>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/calibration.html">Chapter 5: Calibration on Image</a></li>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/htmlcalibration.html">Chapter 6: Calibration on Data</a></li>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/analysis.html">Chapter 7: Analysis</a></li>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/plottingapp.html">Chapter 8: Plotting App</a></li>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/labeledroi.html">Chapter 9: Labeling ROI</a></li>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/videomaking.html">Chapter 10: Video Making</a></li>
+                <li><a href="https://theutpalanand.github.io/DrosoLab/error%20and%20working.html">Chapter 11: Error and Working</a></li>
+            </ul>
         </div>
+    </div>
 
     <div class="a4-container">
         <h1>User Manual: Fly Behavioral Analysis Tool</h1>
@@ -206,14 +189,11 @@
         <h2>1. Overview & Purpose 📈</h2>
         <p>
             The <strong>Fly Behavioral Analysis Tool</strong> is a comprehensive data analysis and visualization
-            application. It is designed to work with the output files from the "Fly Tracking Analysis" script
-            (specifically <code class="code">sorted_output.csv</code> and <code class="code">dam.csv</code>). Its
-            purpose is to quantify and compare complex behavioral metrics across different experimental groups,
-            generating publication-quality plots and data summaries.
-        </p>
-        <p>
-            The tool allows you to define experimental groups, exclude subjects, select specific time windows for
-            analysis, and convert pixel-based measurements into real-world units (millimeters).
+            application built with Python and PySide6. It is designed to work with output files from fly tracking
+            experiments, specifically a coordinates file (e.g., <code class="code">sorted_output.csv</code>) and a DAM
+            system activity file (e.g., <code class="code">dam.csv</code>). Its purpose is to quantify and compare complex behavioral metrics across
+            different experimental groups, allowing for per-group acclimatization periods and generating
+            publication-quality plots and data summaries.
         </p>
 
         <hr>
@@ -224,113 +204,113 @@
         <h3>Step 1: Loading Data</h3>
         <p>In the "File Loading" section, you must load the data you wish to analyze.</p>
         <ul>
-            <li><strong>Load Coordinates CSV:</strong> Click to select your <code class="code">sorted_output.csv</code>
-                file. This file contains the frame-by-frame position of each fly and is required for all
-                coordinate-based analyses.</li>
-            <li><strong>Load DAM CSV:</strong> Click to select your <code class="code">dam.csv</code> file. This
-                contains the activity counts (line crossings) and is required for all DAM-based analyses.</li>
+            <li><strong>Load Coordinates CSV:</strong> Click to select your file containing frame-by-frame positions
+                of each fly (e.g., <code class="code">sorted_output.csv</code>). This is required for all pixel, length, desiccation, and development-based analyses.</li>
+            <li><strong>Load DAM CSV:</strong> Click to select your file containing DAM activity counts (e.g., <code
+                    class="code">dam.csv</code>). This is required for all DAM-based analyses.</li>
         </ul>
         <div class="note">After loading, the time dropdown menus will be populated with the timestamps from your files.
         </div>
 
         <h3>Step 2: Defining Groups and Exclusions</h3>
-        <p>The "Group & Fly Management" section allows you to structure your experiment for comparison.</p>
+        <p>The "Group Management" section allows you to dynamically structure your experiment for comparison.</p>
         <ul>
-            <li><strong>Group Definitions:</strong> Define your experimental groups using the format <code
-                    class="code">GroupName:FlyRange;GroupName2:FlyRange2</code>. For example: <code
-                    class="code">Control:1-10;Treated:11-20</code>. If left blank, all flies will be treated as a single
-                group named "All_Flies".</li>
-            <li><strong>Exclusions:</strong> Enter the numbers of any flies you wish to exclude from all analyses,
-                separated by commas (e.g., <code class="code">5,8,12</code>).</li>
+            <li><strong>Adding Groups:</strong> Click the <strong>Add Group</strong> button to create a new row for an
+                experimental group. You can add as many groups as you need.</li>
+            <li><strong>Group Definition Fields:</strong>
+                <ul>
+                    <li><b>Name:</b> Enter a unique name for the group (e.g., "Control", "Treated").</li>
+                    <li><b>Range:</b> Specify the fly numbers for this group. Use commas for individual numbers and hyphens
+                        for ranges (e.g., <code class="code">1-10,15,21-25</code>).</li>
+                    <li><b>Acclimatization (min):</b> Enter a time in minutes to exclude from the beginning of the analysis window for this specific group only. This allows flies to settle before data collection begins. Leave as 0 to disable.</li>
+                </ul>
+            </li>
+            <li><strong>Removing Groups:</strong> Click the <strong>Remove</strong> button next to any group to delete it.</li>
+            <li><strong>Global Exclusions:</strong> Enter the numbers of any flies you wish to exclude from all analyses, separated by commas (e.g., <code class="code">5,8,12</code>). These flies will be ignored regardless of group definitions.</li>
+            <li><strong>Exclude pre-desiccated flies:</strong> Check this box to automatically remove flies from the final plot if their last recorded movement (desiccation time) occurs before the end of the analysis window. This requires the coordinates file.</li>
         </ul>
 
         <h3>Step 3: Setting Up Coordinate Transformation (Optional)</h3>
-        <p>The "Homography Settings" section is used to convert pixel coordinates into real-world units (e.g.,
-            millimeters). <strong>This is only necessary if you plan to run a "(Length-based)" analysis.</strong></p>
+        <p>The "Homography Settings" section is used to convert pixel coordinates into real-world units (e.g., millimeters). <strong>This is only necessary if you plan to run a "(Length-based)" or a real-world "Time-series" analysis.</strong></p>
         <ul>
-            <li><strong>Image Corner Points:</strong> Enter the pixel coordinates of four known points that form a
-                rectangle in the real world (e.g., the corners of a calibration card). Format is <code
-                    class="code">x,y</code>.</li>
-            <li><strong>Real Side Lengths (mm):</strong> Enter the actual lengths of the top and right sides of that
-                real-world rectangle in millimeters, formatted as <code class="code">Top,Right,Bottom,Left</code>.</li>
-            <li><strong>Update Homography:</strong> Click this to calculate the transformation matrix.</li>
+            <li>In the text box, paste your calibration settings obtained from a calibration script. The text must contain two specific lines:
+                <ul>
+                    <li>A line starting with <code class="code">Coords:</code> followed by four (x,y) pixel coordinate tuples. Example: <code class="code">Coords: (50, 55), (450, 55), (450, 455), (50, 455)</code></li>
+                    <li>A line starting with <code class="code">Dists (cm):</code> followed by four side lengths in centimeters. Example: <code class="code">Dists (cm): 10, 10, 10, 10</code></li>
+                </ul>
+            </li>
+            <li>Click <strong>Update Homography from Pasted Text</strong> to calculate the transformation matrix.</li>
         </ul>
 
         <h3>Step 4: Configuring and Running an Analysis</h3>
         <p>This is the core of the tool, where you select what to measure and plot.</p>
         <ul>
-            <li><strong>Analysis Type:</strong> Choose the specific behavioral metric you want to calculate from the
-                extensive dropdown list. A detailed explanation of each type is in the Appendix.</li>
+            <li><strong>Analysis Type:</strong> Choose the specific behavioral metric from the dropdown list. A detailed explanation of each type is in the Appendix. The UI will adapt to show relevant options.</li>
             <li><strong>Time Range Selection:</strong> Define the window for your analysis.
                 <ul>
                     <li><strong>Start Time:</strong> Select the beginning of the analysis period.</li>
-                    <li><strong>End Time:</strong> (Optional) Select a specific end time.</li>
-                    <li><strong>Interval (minutes):</strong> (Optional) If no end time is selected, enter a duration in
-                        minutes. The analysis will run from the start time for this interval.</li>
+                    <li><strong>End Time (Overrides Interval):</strong> (Optional) Select a specific end time.</li>
+                    <li><strong>Interval (minutes):</strong> (Optional) If no end time is selected, enter a duration. The analysis will run from the start time for this interval.</li>
                 </ul>
             </li>
-            <li><strong>Time-series Fly Selection:</strong> If you choose the "Time-series Plots" analysis, use these
-                spin boxes to select the two specific flies you wish to compare directly. The checkbox allows you to
-                toggle between pixel and real-world units for the plot.</li>
-            <li><strong>Generate Plot:</strong> Click this button to run the selected analysis on the defined groups and
-                time range. The result will be displayed in the plot panel on the right.</li>
+            <li><strong>Time-series Fly Selection:</strong> This section appears only for time-series analysis.
+                 <ul>
+                    <li><b>Fly 1 / Fly 2:</b> Select the two flies you wish to compare.</li>
+                    <li><b>Plot Type:</b> Choose between "Speed & Distance" or "Acceleration".</li>
+                    <li><b>Averaging Interval (min):</b> Set a rolling average window (in minutes) to smooth the plotted data.</li>
+                    <li><b>Use Homography:</b> Check to display the time-series plots in real-world units (mm, mm/s) instead of pixels. Requires homography to be set.</li>
+                 </ul>
+            </li>
+            <li><strong>Generate Plot:</strong> Click this button to run the selected analysis. The result will be displayed in the plot panel on the right.</li>
         </ul>
 
         <h3>Step 5: Saving Your Results</h3>
         <p>After a plot has been generated, you can save your work using the "Actions" buttons.</p>
         <ul>
-            <li><strong>Save Plot:</strong> Saves the currently displayed plot as a high-resolution PNG image file.</li>
-            <li><strong>Save Data:</strong> Saves the underlying data used to generate the plot (e.g., the calculated
-                locomotor activity value for each fly) into a new CSV file.</li>
+            <li><strong>Save Plot:</strong> Saves the currently displayed plot as a high-resolution PNG or SVG image file.</li>
+            <li><strong>Save Data:</strong> Saves the underlying data used to generate the plot (e.g., the calculated value for each fly, group assignment, etc.) into a new CSV file.</li>
         </ul>
 
         <hr>
 
         <h2>Appendix: Analysis Types Explained</h2>
-        <p>The "Analysis Type" dropdown is the tool's most powerful feature. Here is a description of what each option
-            measures.</p>
+        <p>The "Analysis Type" dropdown is the tool's most powerful feature. Here is a description of what each option measures.</p>
 
         <h3>Locomotor Activity</h3>
         <ul>
-            <li><strong>(Pixel-based):</strong> Total distance traveled, calculated by summing the pixel distance
-                between consecutive frames. <strong>Unit: Pixels</strong>.</li>
-            <li><strong>(Length-based):</strong> Total distance traveled in real-world units. Requires homography to be
-                set. <strong>Unit: Millimeters</strong>.</li>
-            <li><strong>(DAM-based):</strong> Total number of line crossings recorded in the DAM file. <strong>Unit:
-                    Counts</strong>.</li>
+            <li><strong>(Pixel-based):</strong> Total distance traveled by summing the pixel distance between consecutive frames. <strong>Unit: Pixels</strong>.</li>
+            <li><strong>(Length-based):</strong> Total distance traveled in real-world units. Requires homography. <strong>Unit: Millimeters (mm)</strong>.</li>
+            <li><strong>(DAM-based):</strong> Total number of line crossings from the DAM file. <strong>Unit: Counts</strong>.</li>
         </ul>
 
         <h3>Resting Proportion</h3>
         <ul>
-            <li><strong>(DAM-based):</strong> The fraction of time intervals where the fly had zero activity counts.
-                <strong>Unit: Proportion (%)</strong>.</li>
-            <li><strong>(Coordinates-based):</strong> The fraction of time where the fly's coordinate was not detected
-                (assumed to be resting/motionless). <strong>Unit: Proportion (%)</strong>.</li>
+            <li><strong>(DAM-based):</strong> The fraction of time intervals where the fly had zero activity counts. <strong>Unit: Proportion (%)</strong>.</li>
+            <li><strong>(Coordinates-based):</strong> The fraction of time where the fly's coordinate was not detected (assumed to be resting/motionless). <strong>Unit: Proportion (%)</strong>.</li>
         </ul>
 
         <h3>Average Speed</h3>
         <ul>
-            <li><strong>(Length-based):</strong> The average speed of the fly in real-world units. Calculated over the
-                time it takes to cover 95% of its total distance to reduce the influence of terminal inactivity.
-                Requires homography. <strong>Unit: mm/second</strong>.</li>
-            <li><strong>(DAM-based):</strong> A proxy for speed based on activity counts over time. <strong>Unit:
-                    counts/second</strong>.</li>
+            <li><strong>(Pixel-based):</strong> Average speed calculated over the time it takes to cover 99% of its total distance to reduce the influence of terminal inactivity. <strong>Unit: pixels/second</strong>.</li>
+            <li><strong>(Length-based):</strong> Average speed in real-world units, using the same 99% distance logic. Requires homography. <strong>Unit: mm/second</strong>.</li>
+            <li><strong>(DAM-based):</strong> A proxy for speed based on the time to reach 99% of total activity. <strong>Unit: counts/second</strong>.</li>
         </ul>
 
         <h3>Key Time Events</h3>
         <ul>
-            <li><strong>Desiccation Time (DAM/Coordinates-based):</strong> The time of the last recorded activity for
-                each fly, marking the end of its active period. <strong>Unit: Hours</strong> from the start of the
-                analysis window.</li>
-            <li><strong>Development Time (DAM/Coordinates-based):</strong> The time of the first recorded activity for
-                each fly. <strong>Unit: Hours</strong> from the start of the analysis window.</li>
+            <li><strong>Desiccation Time:</strong> The time of the <i>last recorded valid coordinate</i> for each fly. This marks the end of its active period. <strong>Unit: Minutes</strong> from the start of the entire experiment file.</li>
+            <li><strong>Development Time:</strong> The time of the <i>first confirmed activity</i> for each fly. Activity is "confirmed" if the first valid coordinate is followed by at least 20 other valid coordinates within the next 10 minutes. This avoids spurious initial readings. <strong>Unit: Minutes</strong> from the <i>Start Time</i> selected in the UI.</li>
         </ul>
 
         <h3>Direct Comparison</h3>
         <ul>
-            <li><strong>Time-series Plots (Comparison):</strong> Does not produce a boxplot. Instead, it generates two
-                detailed plots showing the instantaneous speed and cumulative distance traveled over time for two
-                user-selected flies, allowing for direct visual comparison of their behavior.</li>
+            <li><strong>Time-series Plots (Comparison):</strong> Does not produce a boxplot. Instead, it generates detailed plots for two selected flies.
+                <ul>
+                    <li>If <b>"Speed & Distance"</b> is chosen, it plots instantaneous and averaged speed on one axis and cumulative distance on a second Y-axis.</li>
+                    <li>If <b>"Acceleration"</b> is chosen, it plots instantaneous and averaged acceleration over time.</li>
+                    <li>A vertical dashed line indicates the calculated desiccation time for each fly on its respective plot.</li>
+                </ul>
+            </li>
         </ul>
     </div>
 </body>
