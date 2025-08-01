@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drosophila Tracking Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Merriweather:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #e5e7eb;
+            /* Lighter gray for contrast */
+        }
+
+        /* A4 aspect ratio: 210mm x 297mm */
+        .page {
+            width: 100%;
+            max-width: 827px;
+            /* Approx 210mm at 96dpi */
+            min-height: 1170px;
+            /* Approx 297mm at 96dpi */
+            margin: 2rem auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            color: #1f2937;
+            /* Darker text for professionalism */
+        }
+
+        .title-font {
+            font-family: 'Merriweather', serif;
+        }
+
+        .fly-graphic {
+            filter: none;
+            /* Removing the glow for a cleaner look */
+        }
+
+        .header-line {
+            width: 100px;
+            height: 4px;
+            background-color: #3b82f6;
+            /* A professional blue */
+            margin: 1.5rem auto;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center p-4">
+
+    <!-- A4 Page Container -->
+    <div class="page p-16 flex flex-col">
+
+        <!-- Header: Logo and Institution -->
+        <header class="text-center mb-16">
+            <!-- Using a placeholder image service for the logo -->
+            <div class="w-1/7 md:w-1/12 mx-auto my-4">
+                <img src="https://lh5.googleusercontent.com/-T-HG7_e2QAA6Tu-05fyvE7GrB2hZM4CysYaOkjzBcAln4q2tMImRbmPJY4Nd892e2PNFzs1kYRhexp8AUHuZq9kH0XAc5_0J4q_OGj9p4nv3pbBiR-iUjxfdQ=w16383"
+                    alt="Institution Logo" class="w-full h-full object-cover">
+            </div>
+            <h3 class="text-xl font-bold">Population Biology Laboratory (PBL)</h3>
+            <p class="text-gray-600">IISER PUNE</p>
+        </header>
+
+        <!-- Main Title Section -->
+        <main class="flex-grow flex flex-col items-center justify-center text-center">
+            <h1 class="title-font text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
+                Tracking Drosophila Using Computer Vision
+            </h1>
+            <div class="header-line"></div>
+            <h2 class="mt-4 text-lg md:text-xl text-gray-600 max-w-2xl">
+                A Framework for Automated, High-Throughput Analysis of Locomotor Behavior
+            </h2>
+        </main>
+
+        <!-- Fly Graphic -->
+        <div class="w-1/3 md:w-1/4 mx-auto my-12">
+            <!-- Using the publicly accessible URL for the drosophila image -->
+            <img src="https://lh3.googleusercontent.com/fife/ALs6j_HqVqxd18LEhmPmdUwJAAiH46s_hTVwj-hCxZ1mFGWMXWIyWp2Rly8MJ8JhLGuqWP2BVpxD8lAmdBr8AsfVOS-5FXIzHcW0CxOigmbA5nwpL0VEeJFHUmazlt1iblaOrRLQDUdi62YEpSggjvggPQ_u1mY14_V0W9Xj3LaxctGhsu3Y1wcqRkF4RzubbGCPO-IPqOp12D7RxXkJLpgxdzVGJZnsdR0sgMdSJ0OVoUacsisS-yBtL0qzi2v2VcCD3YdmoKcRBvSLWnEzd-brDkoKV6AJuccxdj56-mlpUh_BhrM5ijkm0olyp_qYBBPB9xwqk_MRkfaoI9yFl6tJ1eD4Km0YNX-uYh8ozeKaGtKlUgkAjG20mQA1ljN7vUpNdt2ylm7ft0wU0RyiqHVe4T1vPMwwEQ9XumPeez_U2JXB6hcWB46E1zEIFVHrlUxmhVgZ-V8BtRmzQcEjgvWLGCMD24jZLfWIQZoR1epsql0V01w6UN4vOHnyYapHx9vJphHI1Q1P3Ua4fnca6x3p4Pm2XXmD3PxbvBmrCl_kbBEDAZyaDP4v2wJ-uOQQ811VDApPZpn4kxFOC1NkrfHi99AAiYKvMZ9JZNcptmvJV7qqlNQMDCeqwC6TkKXlUpCe6Y6hYJ3kMeCzeDRlhX_pUlkmP66JTH6o7qZm5b-U54ldFmi3VKzXUXxGRwxzgqDHz0uQfYVireNLVSyJXmgkJZRCq-zwRGdp4ukPNPPuldHIPDmTPWciQsWu5uNHNI1nY9f_bfa8fD5EoWygMino3V_iWCGFwgVh8CIWC3hMMGeObwZeZYha7UmgzUcG3snRe4jAqBwomQQatQPR6lqnqIucCXFy7eOMJ9bsyYrdWxXHdQzrGZ7F9P3KWKssOdoQa-BQSR1IT06chmcMXGocy-KkW-enhvZ6QxPbLkvxT3DZASjTOQISTHQnCtD68ycLGSBKrdOhJ71uBDMBIVtIaJGs4dbHveKpiwhkhp2QMJ5aoqG_efbO4N4X7iBID_VLzO5J--j3gaJ_qKFgrmGyHPBwnIPEh2tbyUX5hnMEVQFxtMhbnfE8ItO_DHC5ii_E2gnKUCf2xHEueefgOZG3eLUxMIUej3Yk4PZJ1vbOSj9SLoGfubPQottpvwpJ72QaW7bqlrJcA10KCqIkBXIvUsem4dhJG6d0CcLjHQ58xGjjvhOGj3C--cXIrrPxRIczMAv11LkgXShD18kMPmfzPaCwHRtcBq-Ajk9m2g_qmrb4mnCPsBoQ2VYbos41eFuknnLWNliveImFUjvEMhD7mlFB26Ji_aH7eHpjghvUDFerZCfGn3vPmmCC89iQIPztZ5aAS654fEeM_zo56-R2dmRms5D7dZo4Z4Sd0Mi2Nrqg4iy1BTxTzKJ9g3VZU9z7Q-OrOc4gh_NPOVDbviQJocTta3Wby42gbn5pYE1qaAJCLXtncy8sd27p0SEez45laMBcXEyjBdbk3qNYzW_XN7a1jFncMWnzvUrmfQuHErzUWpa-mLPImSoM52oNPnwSpOfZAdsRNK5JB6IGyim8PpFHODo2NTzz0CRyyRWxl_YH9I4N2q-bEp2ojzdapvLXMHKIzeDKlF2CMrujpXBtznHaVnAenU9eeHfOFDYQB_0Rfm1x3yDe_YcJQlY=s1024"
+                alt="Stylized illustration of a Drosophila" class="fly-graphic w-full h-auto">
+        </div>
+
+        <!-- Footer: Author and Date -->
+        <footer class="text-center mt-auto pt-8 border-t">
+            <div class="text-gray-700">
+                <p class="font-bold text-lg"></p>
+                <p class="mt-2 text-xl">Utpal Anand</p>
+            </div>
+            <div class="mt-8 text-gray-500">
+                <p>July 2025</p>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>
