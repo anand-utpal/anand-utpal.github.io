@@ -283,23 +283,26 @@
             <li><strong>(DAM-based):</strong> Total number of line crossings from the DAM file. <strong>Unit: Counts</strong>.</li>
         </ul>
 
-        <h3>Resting Proportion</h3>
+        <h3>Resting Proportion 😴</h3>
         <ul>
-            <li><strong>(DAM-based):</strong> The fraction of time intervals where the fly had zero activity counts. <strong>Unit: Proportion (%)</strong>.</li>
-            <li><strong>(Coordinates-based):</strong> The fraction of time where the fly's coordinate was not detected (assumed to be resting/motionless). <strong>Unit: Proportion (%)</strong>.</li>
+            <li><strong>(DAM-based):</strong> Calculates the proportion of time intervals where the DAM system recorded zero activity (zero line crossings). This represents periods of deep rest. <strong>Unit: Proportion (%)</strong>.</li>
+            <li><strong>(Coordinates-based):</strong> Calculates the proportion of time the tracking algorithm could not detect the fly's coordinates. This is interpreted as the fly being so motionless that the software does not register it, effectively measuring time spent at rest. <strong>Unit: Proportion (%)</strong>.</li>
         </ul>
 
-        <h3>Average Speed</h3>
+        <h3>Average Speed 🏃</h3>
+        <p>
+            This metric provides a robust measure of a fly's speed during its active phase. Instead of a simple `distance / time` calculation, it first determines the time taken for the fly to cover <b>99% of its total distance</b> (or 99% of its total activity for DAM-based data). The average speed is then calculated over this active period, which prevents the final phase of inactivity or death from skewing the result.
+        </p>
         <ul>
-            <li><strong>(Pixel-based):</strong> Average speed calculated over the time it takes to cover 99% of its total distance to reduce the influence of terminal inactivity. <strong>Unit: pixels/second</strong>.</li>
-            <li><strong>(Length-based):</strong> Average speed in real-world units, using the same 99% distance logic. Requires homography. <strong>Unit: mm/second</strong>.</li>
-            <li><strong>(DAM-based):</strong> A proxy for speed based on the time to reach 99% of total activity. <strong>Unit: counts/second</strong>.</li>
+            <li><strong>(Pixel-based):</strong> <strong>Unit: pixels/second</strong>.</li>
+            <li><strong>(Length-based):</strong> Requires homography. <strong>Unit: mm/second</strong>.</li>
+            <li><strong>(DAM-based):</strong> <strong>Unit: counts/second</strong>.</li>
         </ul>
 
-        <h3>Key Time Events</h3>
+        <h3>Key Time Events 🕒</h3>
         <ul>
-            <li><strong>Desiccation Time:</strong> The time of the <i>last recorded valid coordinate</i> for each fly. This marks the end of its active period. <strong>Unit: Minutes</strong> from the start of the entire experiment file.</li>
-            <li><strong>Development Time:</strong> The time of the <i>first confirmed activity</i> for each fly. Activity is "confirmed" if the first valid coordinate is followed by at least 20 other valid coordinates within the next 10 minutes. This avoids spurious initial readings. <strong>Unit: Minutes</strong> from the <i>Start Time</i> selected in the UI.</li>
+            <li><strong>Desiccation Time:</strong> Pinpoints the end of a fly's active life. It is calculated as the time of the <b>very last valid coordinate recorded</b> for the fly in the entire dataset. This marks the moment it stopped moving permanently. <strong>Unit: Minutes</strong> from the beginning of the experiment file.</li>
+            <li><strong>Development Time:</strong> Measures the start of <i>sustained</i> activity, preventing random noise from giving a false start. It finds the first recorded coordinate that is followed by <b>at least 20 other valid coordinates within the next 10 minutes</b>. The time is then calculated from the <b>Start Time selected in the UI</b> to this "confirmed" moment of activity. <strong>Unit: Minutes</strong>.</li>
         </ul>
 
         <h3>Direct Comparison</h3>
