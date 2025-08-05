@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Report</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      min-height: 100vh;
+      color: #333;
+    }
+
+    /* Sidebar Menu */
+    .sidebar {
+      width: 220px;
+      background-color: #f4f4f4;
+      padding-top: 20px;
+      position: fixed;
+      height: 100%;
+      overflow-y: auto;
+      border-right: 1px solid #ddd;
+    }
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #333;
+      border-bottom: 1px solid #ddd;
+    }
+    .sidebar a:hover {
+      background-color: #e0e0e0;
+    }
+
+    /* Main Content */
+    .content {
+      margin-left: 220px;
+      padding: 40px;
+      flex: 1;
+    }
+
+    section {
+      margin-bottom: 60px;
+    }
+
+    /* Cover Page */
+    #cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(to bottom right, #dbeafe, #bfdbfe);
+      text-align: center;
+      padding: 40px;
+    }
+
+    #cover h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+    #cover p {
+      font-size: 1.2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+      .content {
+        margin-left: 0;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <a href="#cover">Cover Page</a>
+    <a href="#chapter1">Chapter 1: Introduction</a>
+    <a href="#chapter2">Chapter 2: Methodology</a>
+    <a href="#chapter3">Chapter 3: Analysis</a>
+    <a href="#chapter4">Chapter 4: Conclusion</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="content">
+    <section id="cover">
+      <h1>Student Report Title</h1>
+      <p><strong>Student Name:</strong> Jane Doe</p>
+      <p><strong>Course:</strong> Data Science 101</p>
+      <p><strong>Date:</strong> August 2025</p>
+    </section>
+
+    <section id="chapter1">
+      <h2>Chapter 1: Introduction</h2>
+      <p>This is the introduction section. Explain the context and objectives here.</p>
+    </section>
+
+    <section id="chapter2">
+      <h2>Chapter 2: Methodology</h2>
+      <p>Describe your data sources, collection, and analytical methods here.</p>
+    </section>
+
+    <section id="chapter3">
+      <h2>Chapter 3: Analysis</h2>
+      <p>Include visualizations, tables, and analysis narrative.</p>
+    </section>
+
+    <section id="chapter4">
+      <h2>Chapter 4: Conclusion</h2>
+      <p>Summarize your findings and suggest future work or applications.</p>
+    </section>
+  </div>
+
+</body>
+</html>
