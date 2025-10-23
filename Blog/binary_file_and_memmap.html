@@ -220,7 +220,7 @@
           </div>
           <div>
             <h1 id="page-title">Why should we write tokenized data to <code>.bin</code>(binary) (and memmap vs
-              streaming)</h1>
+              streaming)?</h1>
             <p class="lead">This blog explains the speed and memory-efficiency as well the limitations of memmap and
               will try to understand the modern streaming solutions for large-scale training. </p>
           </div>
@@ -313,7 +313,7 @@ y = torch.tensor(memmap[ix + 1 : ix + 1 + block_size])
 
 
         <section class="card" aria-labelledby="streaming">
-          <h2 id="streaming"><span class="kicker">Modern solution </span>Streaming Datasets (Best Practice at Scale)
+          <h2 id="streaming"><span class="kicker">Modern Way :</span>Streaming Datasets (Best Practice at Scale)
           </h2>
           <p>For web-scale training, the industry uses <strong>streaming</strong> and sharded datasets stored in object
             stores (S3, GCS, etc.). Key points:</p>
