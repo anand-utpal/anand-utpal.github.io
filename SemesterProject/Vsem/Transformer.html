@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Content Slideshow</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom style for a good aspect ratio on the content box */
+        #slide-content {
+            /* 16:9 aspect ratio */
+            aspect-ratio: 16 / 9;
+        }
+        
+        /* Fallback for browsers that don't support aspect-ratio */
+        @supports not (aspect-ratio: 16 / 9) {
+            #slide-content {
+                height: 70vh; /* A reasonable height */
+            }
+        }
+
+        /* Ensure video and iframe fill the container */
+        #slide-content video,
+        #slide-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans antialiased">
+
+    <div class="container mx-auto max-w-5xl p-4 sm:p-8">
+        
+        <header class="text-center mb-6">
+            <h1 class="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400">Transformer Architecture</h1>
+            <p class="text-lg text-gray-600 dark:text-gray-300 mt-2">Navigate through schematic to understand.</p>
+        </header>
+
+        <!-- Main Content Display Area -->
+        <main class="mb-6">
+            <div id="slide-content" class="w-full bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden flex justify-center items-center text-gray-500">
+                <!-- Content will be loaded here by JavaScript -->
+                <span>Loading content...</span>
+            </div>
+        </main>
+
+        <!-- Navigation Controls -->
+        <nav class="flex justify-between items-center">
+            <button id="prevButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-0.5">
+                &larr; Previous
+            </button>
+            
+            <div id="slide-counter" class="text-lg font-semibold text-gray-700 dark:text-gray-300">
+                <!-- Counter will be updated here -->
+            </div>
+
+            <button id="nextButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-0.5">
+                Next &rarr;
+            </button>
+        </nav>
+
+        <!-- Informational note for the user -->
+        <div class="text-center mt-8 p-4 bg-gray-200 dark:bg-gray-800 rounded-lg text-sm text-gray-600 dark:text-gray-400">
+            <p><strong class="font-semibold"></strong> Utpal Anand @ 2025</p>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- CONFIGURATION ---
+            // Edit this list to add your content.
+            // Make sure the file paths are correct!
+            const slides = [
+                { type: 'video', src: 'embedding_matrix.mp4' },
+                { type: 'video', src: 'combine_embedding.mp4' },
+                { type: 'video', src: 'layer_normalisation.mp4' },
+                { type: 'pdf', src: 'transformer.pdf' },
+                { type: 'pdf', src: 'attention.pdf' },
+                { type: 'pdf', src: 'attention_weight.pdf' },
+                { type: 'pdf', src: 'contact.pdf' },
+                { type: 'pdf', src: 'final.pdf' },
+                { type: 'video', src: 'organisation.mp4' }
+            ];
+            // ---------------------
+
+            let currentSlide = 0;
+            const slideContent = document.getElementById('slide-content');
+            const prevButton = document.getElementById('prevButton');
+            const nextButton = document.getElementById('nextButton');
+            const slideCounter = document.getElementById('slide-counter');
+
+            function renderSlide(index) {
+                if (index < 0 || index >= slides.length) {
+                    console.error("Invalid slide index");
+                    return;
+                }
+
+                const slide = slides[index];
+                // Clear previous content
+                slideContent.innerHTML = '';
+
+                if (slide.type === 'video') {
+                    const video = document.createElement('video');
+                    video.src = slide.src;
+                    video.muted = true;  // As requested, no voice
+                    video.autoplay = true;
+                    video.loop = true;
+                    video.playsInline = true; // Important for mobile browsers
+                    video.className = "w-full h-full object-cover";
+                    video.onerror = () => {
+                        slideContent.innerHTML = `<div class="p-8 text-red-500">Error: Could not load video file.<br>Please check path: ${slide.src}</div>`;
+                    };
+                    slideContent.appendChild(video);
+                } 
+                else if (slide.type === 'pdf') {
+                    const iframe = document.createElement('iframe');
+                    // Add #toolbar=0 to hide the default PDF toolbar for a cleaner look
+                    iframe.src = `${slide.src}#toolbar=0&navpanes=0`;
+                    iframe.className = "w-full h-full border-none";
+                    iframe.title = "PDF Document Viewer";
+                    iframe.onerror = () => {
+                         slideContent.innerHTML = `<div class="p-8 text-red-500">Error: Could not load PDF file.<br>Please check path: ${slide.src}</div>`;
+                    };
+                    slideContent.appendChild(iframe);
+                }
+
+                // Update the counter
+                slideCounter.textContent = `Item ${index + 1} of ${slides.length}`;
+                
+                // Disable/Enable buttons at ends
+                prevButton.disabled = index === 0;
+                nextButton.disabled = index === slides.length - 1;
+
+                prevButton.classList.toggle('opacity-50', index === 0);
+                prevButton.classList.toggle('cursor-not-allowed', index === 0);
+                nextButton.classList.toggle('opacity-50', index === slides.length - 1);
+                nextButton.classList.toggle('cursor-not-allowed', index === slides.length - 1);
+            }
+
+            // --- Event Listeners ---
+            nextButton.addEventListener('click', () => {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    renderSlide(currentSlide);
+                }
+            });
+
+            prevButton.addEventListener('click', () => {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    renderSlide(currentSlide);
+                }
+            });
+
+            // --- Initial Load ---
+            if (slides.length > 0) {
+                renderSlide(currentSlide);
+            } else {
+                slideContent.innerHTML = '<div class="p-8">No slides configured. Please edit the <code>slides</code> array in the script.</div>';
+                slideCounter.textContent = '0 of 0';
+                prevButton.disabled = true;
+                nextButton.disabled = true;
+                prevButton.classList.add('opacity-50', 'cursor-not-allowed');
+                nextButton.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        });
+    </script>
+
+</body>
+</html>
+
