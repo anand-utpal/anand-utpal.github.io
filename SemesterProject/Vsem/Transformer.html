@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content Slideshow</title>
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Custom style for a good aspect ratio on the content box */
@@ -38,30 +37,25 @@
             <p class="text-lg text-gray-600 dark:text-gray-300 mt-2">Navigate through schematic to understand.</p>
         </header>
 
-        <!-- Main Content Display Area -->
         <main class="mb-6">
             <div id="slide-content" class="w-full bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden flex justify-center items-center text-gray-500">
-                <!-- Content will be loaded here by JavaScript -->
                 <span>Loading content...</span>
             </div>
         </main>
 
-        <!-- Navigation Controls -->
         <nav class="flex justify-between items-center">
             <button id="prevButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-0.5">
                 &larr; Previous
             </button>
             
             <div id="slide-counter" class="text-lg font-semibold text-gray-700 dark:text-gray-300">
-                <!-- Counter will be updated here -->
-            </div>
+                </div>
 
             <button id="nextButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-0.5">
                 Next &rarr;
             </button>
         </nav>
 
-        <!-- Informational note for the user -->
         <div class="text-center mt-8 p-4 bg-gray-200 dark:bg-gray-800 rounded-lg text-sm text-gray-600 dark:text-gray-400">
             <p><strong class="font-semibold"></strong> Utpal Anand @ 2025</p>
         </div>
@@ -110,7 +104,7 @@
                     video.autoplay = true;
                     video.loop = true;
                     video.playsInline = true; // Important for mobile browsers
-                    video.className = "w-full h-full object-cover";
+                    video.className = "w-full h-full object-cover"; // You can change 'object-cover' to 'object-contain'
                     video.onerror = () => {
                         slideContent.innerHTML = `<div class="p-8 text-red-500">Error: Could not load video file.<br>Please check path: ${slide.src}</div>`;
                     };
@@ -118,8 +112,8 @@
                 } 
                 else if (slide.type === 'pdf') {
                     const iframe = document.createElement('iframe');
-                    // Add #toolbar=0 to hide the default PDF toolbar for a cleaner look
-                    iframe.src = `${slide.src}#toolbar=0&navpanes=0`;
+                    // Add #view=FitH to zoom the PDF to the container's width
+                    iframe.src = `${slide.src}#view=FitH&toolbar=0&navpanes=0`; // <-- THIS LINE IS CHANGED
                     iframe.className = "w-full h-full border-none";
                     iframe.title = "PDF Document Viewer";
                     iframe.onerror = () => {
@@ -172,4 +166,3 @@
 
 </body>
 </html>
-
