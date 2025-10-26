@@ -69,8 +69,8 @@
             // Edit this list to add your content.
             // Make sure the file paths are correct!
             const slides = [
-                { type: 'video', src: 'SemesterProject/Vsem/EmbeddingMatrix.mp4' },
-                { type: 'video', src: 'SemesterProject/Vsem/Combinedembedding.mp4' },
+                { type: 'video', src: 'embeddingmatrix.mp4' },
+                { type: 'video', src: 'combinedembedding.mp4' },
                 { type: 'video', src: 'layernormalizationdiagram.mp4' },
                 { type: 'pdf', src: 'transformer.pdf' },
                 { type: 'pdf', src: 'attention.pdf' },
@@ -104,7 +104,7 @@
                     video.autoplay = true;
                     video.loop = true;
                     video.playsInline = true; // Important for mobile browsers
-                    video.className = "w-full h-full object-cover"; // You can change 'object-cover' to 'object-contain'
+                    video.className = "w-full h-full object-cover"; 
                     video.onerror = () => {
                         slideContent.innerHTML = `<div class="p-8 text-red-500">Error: Could not load video file.<br>Please check path: ${slide.src}</div>`;
                     };
@@ -112,8 +112,10 @@
                 } 
                 else if (slide.type === 'pdf') {
                     const iframe = document.createElement('iframe');
-                    // Add #view=FitH to zoom the PDF to the container's width
-                    iframe.src = `${slide.src}#view=FitH&toolbar=0&navpanes=0`; // <-- THIS LINE IS CHANGED
+                    
+                    // ***** THIS IS THE FIX for "BIG PDFs" *****
+                    iframe.src = `${slide.src}#view=FitH&toolbar=0&navpanes=0`; 
+                    
                     iframe.className = "w-full h-full border-none";
                     iframe.title = "PDF Document Viewer";
                     iframe.onerror = () => {
