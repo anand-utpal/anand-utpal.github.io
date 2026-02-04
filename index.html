@@ -3,154 +3,410 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Researcher Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&family=JetBrains+Mono:wght@200;400&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --accent: #555555;
+            --line: #eeeeee;
+        }
 
-    <title>Utpal Anand | Physics & Biology Student Portfolio</title>
-    <meta name="description" content="Portfolio of Utpal Anand, a second-year BS-MS student at IISER Pune, showcasing projects in physics and biology, and a passion for science.">
-    <meta name="keywords" content="Utpal Anand, IISER Pune, portfolio, physics, experimental physics, biology, science student, data analysis, web development">
-    <meta name="author" content="Utpal Anand">
-    <link rel="canonical" href="https://utpalanand.com"> <link rel="icon" href="favicon.ico" type="image/x-icon">
+        [data-theme="dark"] {
+            --bg: #121212;
+            --text: #e0e0e0;
+            --accent: #bbbbbb;
+            --line: #2a2a2a;
+        }
 
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://utpalanand.com"> <meta property="og:title" content="Utpal Anand | Physics & Biology Student Portfolio">
-    <meta property="og:description" content="Discover the work of Utpal Anand, a passionate science student from IISER Pune.">
-    <meta property="og:image" content="https://utpalanand.com/og-image.jpg"> <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://utpalanand.com"> <meta property="twitter:title" content="Utpal Anand | Physics & Biology Student Portfolio">
-    <meta property="twitter:description" content="Discover the work of Utpal Anand, a passionate science student from IISER Pune.">
-    <meta property="twitter:image" content="https://utpalanand.com/og-image.jpg"> <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script> </head>
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'IBM Plex Mono', monospace;
+            margin: 0;
+            padding: 0;
+            transition: background 0.3s, color 0.3s;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 60px;
+        }
+
+        .left-nav {
+            flex: 0 0 180px;
+            text-align: right;
+        }
+        
+        .profile-image-placeholder img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 30px;
+        }
+
+        .vertical-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border-right: 1px solid var(--line);
+            padding-right: 20px;
+        }
+
+        .vertical-tab {
+            text-decoration: none;
+            color: var(--accent);
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        .vertical-tab.active {
+            color: var(--text);
+            font-weight: bold;
+        }
+
+        .main-area {
+            flex: 1;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--accent);
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab.active {
+            color: var(--text);
+            border-bottom-color: var(--text);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Header & Bilingual Name */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+
+        .name-box h1 {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 200;
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .hindi-name {
+            font-family: 'Noto Sans Devanagari', sans-serif;
+            font-size: 1.2rem;
+            color: var(--accent);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+.toggle-btn {
+            background: none;
+            border: 1px solid var(--accent);
+            color: var(--text);
+            padding: 5px 10px;
+            cursor: pointer;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+        }
+
+        /* Theme Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: var(--text);
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--text);
+        }
+
+        input:checked + .slider:before {
+            -webkit-transform: translateX(26px);
+            -ms-transform: translateX(26px);
+            transform: translateX(26px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        /* Sections */
+        section { margin-bottom: 60px; }
+        
+        h2 {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-left: 3px solid var(--text);
+            padding-left: 15px;
+            margin-bottom: 30px;
+        }
+
+        .item {
+            margin-bottom: 25px;
+        }
+
+        .item-title {
+            font-weight: 400;
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .item-meta {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .interests-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .interests-list li {
+            background-color: var(--line);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-align: center;
+            margin-top: 100px;
+            border-top: 1px solid var(--line);
+            padding-top: 20px;
+        }
+
+        a:hover { opacity: 0.7; }
+    </style>
+</head>
 <body>
 
-    <header class="main-header">
-        <nav>
-            <a href="#home" class="logo">Utpal Anand</a>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#experience">Journey</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+<div class="container">
+    <header>
+        <div class="name-box">
+            <span class="hindi-name">उत्पल आनंद</span> <h1>Utpal Anand</h1>
+        </div>
+        <label class="switch">
+            <input type="checkbox" onclick="toggleTheme()">
+            <span class="slider round"></span>
+        </label>
     </header>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="hero-content fade-in">
-                <h1>Exploring Science, Explaining Concepts.</h1>
-                <p class="subtitle">A curious mind navigating the worlds of experimental physics and biology.</p>
-                <a href="#projects" class="btn">View My Work</a>
+    <div class="main-content">
+        <aside class="left-nav">
+            <div class="profile-image-placeholder">
+                <img src="./profile.jpg" alt="Utpal Anand">
             </div>
-        </section>
+            <nav class="vertical-tabs">
+                <a href="#projects" class="vertical-tab">Projects</a>
+                <a href="#publications" class="vertical-tab">Publications</a>
+                <a href="#education" class="vertical-tab">Education</a>
+            </nav>
+        </aside>
 
-        <section id="about" class="content-section fade-in">
-            <div class="container">
-                <div class="about-wrapper">
-                    <div class="about-text">
-                        <h2>About Me</h2>
-                        <p>
-                            Welcome! My name is Utpal Anand, and I'm currently a second-year BS-MS student at IISER Pune. I am deeply passionate about the sciences, with a special focus on experimental physics and a strong curiosity for biology. This website was born from my own experience; remembering the challenges of finding clear resources, I built this space to be a helping hand for other students on a similar path.
-                        </p>
-                    </div>
-                    <div class="about-image">
-                        <img src="https://via.placeholder.com/400" alt="A portrait of Utpal Anand">
-                    </div>
-                </div>
-            </div>
-        </section>
+        <main class="main-area">
+            <nav class="tabs">
+                <a href="#about" class="tab active">About</a>
+                <a href="#blog" class="tab">Blog</a>
+            </nav>
 
-        <section id="projects" class="content-section fade-in">
-            <div class="container">
-                <h2 class="section-title">Featured Projects</h2>
-                <div class="project-grid">
-                    <div class="project-card">
-                        <img src="https://via.placeholder.com/500x300/1a1a2e/ffffff?text=Project+Alpha" alt="Screenshot of Project Alpha">
-                        <div class="card-content">
-                            <h3>Project Alpha: Physics Simulation</h3>
-                            <p>A Python-based simulation modeling particle collisions in a magnetic field, using Matplotlib for visualization. Developed to better understand fundamental concepts in electromagnetism.</p>
-                            <a href="#" class="btn-secondary">View on GitHub</a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <img src="https://via.placeholder.com/500x300/1a1a2e/ffffff?text=Project+Beta" alt="Screenshot of Project Beta">
-                        <div class="card-content">
-                            <h3>Project Beta: Biology Data Analysis</h3>
-                            <p>Analyzed a public gene expression dataset using R and ggplot2 to identify differentially expressed genes in a specific biological condition. A dive into bioinformatics and statistical analysis.</p>
-                             <a href="#" class="btn-secondary">Read Case Study</a>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                         <img src="https://via.placeholder.com/500x300/1a1a2e/ffffff?text=Study+Helper+Website" alt="Screenshot of the Study Helper Website">
-                        <div class="card-content">
-                            <h3>Study Helper Website</h3>
-                            <p>The very website that started it all. Built with HTML and CSS to provide clear, accessible study materials for fellow students in Hindi Grammar, Maths, and general education topics.</p>
-                             <a href="#" class="btn-secondary">Visit Site</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="tab-content active" id="about">
+                <section>
+                    <p>I am a 3rd-year BS-MS student at IISER Pune pursuing a dual focus in AI and Physics. I am passionate
+about exploring the intersection of physics and deep learning, with hands-on experience in computer vision and transformer architectures. I am currently working on building language models from scratch and have built a hindi small language model based on Gemma-270M from scratch. I want to contribute to
+research at the confluence of physical sciences and AI, leveraging deep learning to solve scientific problems.</p>
+                </section>
+                <section id="research">
+                    <h2>Selected Research</h2>
+                    
+                </section>
+                <section>
+                    <h2>Interests</h2>
+                    <ul class="interests-list">
+                        <li>Deep Learning</li>
+                        <li>Reinforcement Learning</li>
+                        <li>Robotics</li>
+                        <li>Quantum Computing</li>
+                        
+                    </ul>
+                </section>
             </div>
-        </section>
-        
-        <section id="experience" class="content-section fade-in">
-            <div class="container">
-                <h2 class="section-title">My Academic Journey</h2>
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>BS-MS, Basic Sciences</h3>
-                            <p class="timeline-meta">IISER Pune | 2023 - Present</p>
-                            <p>Currently in my second year, focusing on foundational and advanced topics in physics and biology. Gaining hands-on lab experience and developing analytical skills.</p>
-                        </div>
-                    </div>
-                     <div class="timeline-item">
-                        <div class="timeline-dot"></div>
-                        <div class="timeline-content">
-                            <h3>Higher Secondary Education</h3>
-                            <p class="timeline-meta">Your School Name | 2021 - 2023</p>
-                            <p>Developed a strong foundation in Physics, Chemistry, Maths, and Biology, which sparked my interest in pursuing a career in scientific research and education.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="contact" class="content-section fade-in">
-            <div class="container text-center">
-                <h2 class="section-title">Get In Touch</h2>
-                <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of a team. Feel free to reach out!</p>
-                <a href="mailto:your.email@example.com" class="btn">Say Hello</a> <div class="social-links">
-                    <a href="https://github.com/your-username" target="_blank" aria-label="GitHub">GitHub</a>
-                    <a href="https://linkedin.com/in/your-username" target="_blank" aria-label="LinkedIn">LinkedIn</a>
-                    <a href="https://twitter.com/your-username" target="_blank" aria-label="Twitter">Twitter</a>
-                </div>
+            <div class="tab-content" id="blog">
+                <section>
+                    <h2></h2>
+                    <div class="item">
+                        <a href="https://anand-utpal.github.io/Blog/binary_file_and_memmap.html" class="item-title">Why should we write tokenized data to .bin(binary) (and memmap vs streaming)?</a>
+                        <span class="item-meta">Feb 2026 • 7 min read</span>
+                    </div>
+                    <div class="item">
+                        <a href="https://anand-utpal.github.io/SemesterProject/Vsem/Transformer.html" class="item-title">Transformer Architecture</a>
+                        <span class="item-meta">Feb 2026 • 7 min read</span>
+                    </div>
+                </section>
             </div>
-        </section>
-    </main>
+
+            <div class="tab-content" id="projects">
+                <section>
+                    <h2>Projects</h2>
+                    <div class="item">
+                        <a href="https://anand-utpal.github.io/DrosoLab/coverpage.html" class="item-title" target="_blank">Large-Scale Drosophila Activity Monitoring Using Computer Vision</a>
+                        <span class="item-meta">Developing a Comprehensive Application with a User-Friendly Interface</span>
+                    </div>
+                </section>
+            </div>
+
+            <div class="tab-content" id="publications">
+                <section>
+                    <h2>Publications</h2>
+                    <p>None</p>
+                </section>
+            </div>
+
+            <div class="tab-content" id="education">
+                <section>
+                    <h2>Education</h2>
+                    
+                    <div class="item">
+                        <span class="item-title">BS in Physics</span>
+                        <span class="item-meta">IISER Pune, 2023 - Present</span>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
 
     <footer>
-        <p>&copy; 2025 Utpal Anand. All rights reserved.</p>
+        &copy; 2026 | Utpal Anand
     </footer>
+</div>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Utpal Anand",
-      "url": "https://utpalanand.com", "sameAs": [
-        "https://github.com/your-username", "https://linkedin.com/in/your-username", "https://twitter.com/your-username" ],
-      "jobTitle": "Student Researcher",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "IISER Pune"
-      },
-      "alumniOf": "IISER Pune",
-      "knowsAbout": ["Physics", "Experimental Physics", "Biology", "Data Analysis", "Scientific Communication"]
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+        } else {
+            body.setAttribute('data-theme', 'dark');
+        }
     }
-    </script>
-    
-    <script src="script.js"></script>
+
+    const tabs = document.querySelectorAll('.tab');
+    const verticalTabs = document.querySelectorAll('.vertical-tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    function handleTabClick(tab, isVertical) {
+        const allTabs = isVertical ? verticalTabs : tabs;
+        allTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const target = document.querySelector(tab.getAttribute('href'));
+
+        tabContents.forEach(tc => {
+            tc.classList.remove('active');
+        });
+        target.classList.add('active');
+
+        if (!isVertical) {
+            verticalTabs.forEach(t => t.classList.remove('active'));
+        } else {
+            tabs.forEach(t => t.classList.remove('active'));
+        }
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleTabClick(tab, false);
+        });
+    });
+
+    verticalTabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            handleTabClick(tab, true);
+        });
+    });
+</script>
 
 </body>
 </html>
