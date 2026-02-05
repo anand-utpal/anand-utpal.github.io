@@ -342,7 +342,7 @@
         a:hover { opacity: 0.7; }
     </style>
 </head>
-<body>
+<body data-theme="dark">
 
 <div class="container">
     <header>
@@ -362,7 +362,7 @@
             </div>
         </div>
         <label class="switch">
-            <input type="checkbox" onclick="toggleTheme()">
+            <input id="themeToggle" type="checkbox" checked onclick="toggleTheme()">
             <span class="slider round"></span>
         </label>
     </header>
@@ -459,12 +459,14 @@ research at the confluence of physical sciences and AI, leveraging deep learning
 <script>
     function toggleTheme() {
         const body = document.body;
-        
-        if (body.getAttribute('data-theme') === 'dark') {
-            body.removeAttribute('data-theme');
-        } else {
+        const themeToggle = document.getElementById('themeToggle');
+
+        if (themeToggle.checked) {
             body.setAttribute('data-theme', 'dark');
+            return;
         }
+
+        body.removeAttribute('data-theme');
     }
 
     const tabs = document.querySelectorAll('.tab');
