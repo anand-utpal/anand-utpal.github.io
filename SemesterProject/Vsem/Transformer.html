@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Content Slideshow</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
         /* Custom style for a good aspect ratio on the content box */
         #slide-content {
@@ -19,12 +20,38 @@
             }
         }
 
-        /* Ensure video and iframe fill the container */
-        #slide-content video,
-        #slide-content iframe {
+        /* Ensure media fills the container */
+        #slide-content video {
             width: 100%;
             height: 100%;
             border: none;
+        }
+
+        .pdf-preview {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            padding: 14px;
+        }
+
+        .pdf-canvas {
+            max-width: 100%;
+            max-height: calc(100% - 34px);
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+            background: white;
+        }
+
+        .pdf-meta {
+            font-size: 0.85rem;
+            opacity: 0.85;
         }
     </style>
 </head>
@@ -86,6 +113,58 @@
             const prevButton = document.getElementById('prevButton');
             const nextButton = document.getElementById('nextButton');
             const slideCounter = document.getElementById('slide-counter');
+            let renderToken = 0;
+
+            if (window.pdfjsLib) {
+                window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+                    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+            }
+
+            async function renderPdfPreview(src, token) {
+                slideContent.innerHTML = `<div class="pdf-preview"><p class="pdf-meta">Loading PDF preview...</p></div>`;
+
+                if (!window.pdfjsLib) {
+                    slideContent.innerHTML = `<div class="p-8 text-red-500">PDF renderer is unavailable.<br>Please refresh and try again.</div>`;
+                    return;
+                }
+
+                try {
+                    const loadingTask = window.pdfjsLib.getDocument(src);
+                    const pdfDoc = await loadingTask.promise;
+                    if (token !== renderToken) return;
+
+                    const page = await pdfDoc.getPage(1);
+                    if (token !== renderToken) return;
+
+                    const viewportBase = page.getViewport({ scale: 1 });
+                    const maxWidth = Math.max(240, slideContent.clientWidth - 30);
+                    const maxHeight = Math.max(200, slideContent.clientHeight - 56);
+                    const scale = Math.min(maxWidth / viewportBase.width, maxHeight / viewportBase.height);
+                    const viewport = page.getViewport({ scale: Math.max(scale, 0.2) });
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'pdf-preview';
+
+                    const canvas = document.createElement('canvas');
+                    canvas.className = 'pdf-canvas';
+                    canvas.width = Math.floor(viewport.width);
+                    canvas.height = Math.floor(viewport.height);
+                    wrapper.appendChild(canvas);
+
+                    const meta = document.createElement('p');
+                    meta.className = 'pdf-meta';
+                    meta.textContent = `${src} • page 1 of ${pdfDoc.numPages}`;
+                    wrapper.appendChild(meta);
+
+                    slideContent.innerHTML = '';
+                    slideContent.appendChild(wrapper);
+
+                    const context = canvas.getContext('2d', { alpha: false });
+                    await page.render({ canvasContext: context, viewport }).promise;
+                } catch (error) {
+                    slideContent.innerHTML = `<div class="p-8 text-red-500">Error: Could not render PDF preview.<br>Please check path: ${src}</div>`;
+                }
+            }
 
             function renderSlide(index) {
                 if (index < 0 || index >= slides.length) {
@@ -93,6 +172,7 @@
                     return;
                 }
 
+                const token = ++renderToken;
                 const slide = slides[index];
                 // Clear previous content
                 slideContent.innerHTML = '';
@@ -111,17 +191,7 @@
                     slideContent.appendChild(video);
                 } 
                 else if (slide.type === 'pdf') {
-                    const iframe = document.createElement('iframe');
-                    
-                    // ***** THIS IS THE FIX for "BIG PDFs" *****
-                    iframe.src = `${slide.src}#view=FitH&toolbar=0&navpanes=0`; 
-                    
-                    iframe.className = "w-full h-full border-none";
-                    iframe.title = "PDF Document Viewer";
-                    iframe.onerror = () => {
-                         slideContent.innerHTML = `<div class="p-8 text-red-500">Error: Could not load PDF file.<br>Please check path: ${slide.src}</div>`;
-                    };
-                    slideContent.appendChild(iframe);
+                    renderPdfPreview(slide.src, token);
                 }
 
                 // Update the counter
