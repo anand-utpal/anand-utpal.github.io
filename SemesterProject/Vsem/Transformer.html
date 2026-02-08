@@ -189,7 +189,6 @@
 
         .pdf-wrap {
             width: max-content;
-            min-width: 100%;
             height: auto;
             display: flex;
             flex-direction: column;
@@ -367,8 +366,8 @@
             let currentPdfPage = 1;
             let pdfZoom = 1;
             const pdfMinZoom = 0.7;
-            const pdfMaxZoom = 3;
-            const pdfZoomStep = 0.2;
+            const pdfMaxZoom = 12;
+            const pdfZoomStep = 0.25;
 
             if (window.pdfjsLib) {
                 window.pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -452,6 +451,8 @@
 
             async function renderPdfPreview(src, token) {
                 showPdfTools(true);
+                slideContent.style.justifyContent = 'flex-start';
+                slideContent.style.alignItems = 'flex-start';
                 slideContent.innerHTML = '<span>Loading PDF preview...</span>';
 
                 if (!window.pdfjsLib) {
@@ -475,6 +476,8 @@
             function renderVideo(src) {
                 showPdfTools(false);
                 currentPdf = null;
+                slideContent.style.justifyContent = 'center';
+                slideContent.style.alignItems = 'center';
                 slideContent.innerHTML = '';
 
                 const video = document.createElement('video');
