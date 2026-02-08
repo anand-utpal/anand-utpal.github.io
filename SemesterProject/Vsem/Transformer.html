@@ -3,98 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Slideshow</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Transformer Architecture</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;1,300&family=JetBrains+Mono:wght@200;400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <style>
-        /* Custom style for a good aspect ratio on the content box */
-        #slide-content {
-            /* 16:9 aspect ratio */
-            aspect-ratio: 16 / 9;
-        }
-        
-        /* Fallback for browsers that don't support aspect-ratio */
-        @supports not (aspect-ratio: 16 / 9) {
-            #slide-content {
-                height: 70vh; /* A reasonable height */
-            }
+        :root {
+            --bg: #ffffff;
+            --text: #1a1a1a;
+            --accent: #555555;
+            --line: #eeeeee;
+            --panel: #fafafa;
         }
 
-        /* Ensure media fills the container */
+        [data-theme="dark"] {
+            --bg: #121212;
+            --text: #e0e0e0;
+            --accent: #b8b8b8;
+            --line: #2a2a2a;
+            --panel: #181818;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'IBM Plex Mono', monospace;
+            line-height: 1.6;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            gap: 16px;
+        }
+
+        .title-wrap h1 {
+            margin: 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 200;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            margin-top: 8px;
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .3s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+        }
+
+        input:checked + .slider {
+            background-color: var(--text);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .stage {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            padding: 14px;
+            min-height: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .pdf-tools {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid var(--line);
+            padding: 8px 10px;
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        .pdf-tool-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .tool-btn {
+            border: 1px solid var(--line);
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.8rem;
+            padding: 5px 8px;
+            cursor: pointer;
+        }
+
+        #slide-content {
+            flex: 1;
+            border: 1px solid var(--line);
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            min-height: 320px;
+            position: relative;
+        }
+
         #slide-content video {
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: contain;
+            background: #000;
         }
 
-        .pdf-preview {
+        .pdf-wrap {
             width: 100%;
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            gap: 10px;
-            padding: 14px;
+            justify-content: center;
+            padding: 10px;
+            gap: 8px;
         }
 
         .pdf-canvas {
-            max-width: 100%;
-            max-height: calc(100% - 34px);
+            display: block;
             width: auto;
             height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-            background: white;
+            max-width: 100%;
+            max-height: calc(100% - 28px);
+            border: 1px solid var(--line);
+            background: #fff;
         }
 
         .pdf-meta {
-            font-size: 0.85rem;
-            opacity: 0.85;
+            color: var(--accent);
+            font-size: 0.8rem;
+            margin: 0;
+            text-align: center;
+        }
+
+        .nav {
+            margin-top: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-btn {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            color: var(--text);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            padding: 8px 14px;
+            cursor: pointer;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #slide-counter {
+            color: var(--accent);
+            font-size: 0.9rem;
+            text-align: center;
+            flex: 1;
+        }
+
+        footer {
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-align: center;
+            margin-top: 80px;
+            border-top: 1px solid var(--line);
+            padding-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 12px;
+            }
+
+            header {
+                align-items: flex-start;
+            }
+
+            .title-wrap h1 {
+                font-size: 1.3rem;
+            }
+
+            .stage {
+                min-height: 320px;
+                padding: 10px;
+            }
+
+            #slide-content {
+                min-height: 240px;
+            }
+
+            .nav {
+                gap: 8px;
+            }
+
+            .nav-btn {
+                padding: 7px 10px;
+                font-size: 0.8rem;
+            }
+
+            #slide-counter {
+                font-size: 0.82rem;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans antialiased">
-
-    <div class="container mx-auto max-w-5xl p-4 sm:p-8">
-        
-        <header class="text-center mb-6">
-            <h1 class="text-3xl sm:text-4xl font-bold text-blue-600 dark:text-blue-400">Transformer Architecture</h1>
-            <p class="text-lg text-gray-600 dark:text-gray-300 mt-2">Navigate through schematic to understand.</p>
+<body data-theme="dark">
+    <div class="container">
+        <header>
+            <div class="title-wrap">
+                <h1>Transformer Architecture</h1>
+                <div class="subtitle">Navigate through videos and PDF slides.</div>
+            </div>
+            <label class="switch" aria-label="Theme toggle">
+                <input id="themeToggle" type="checkbox" checked>
+                <span class="slider round"></span>
+            </label>
         </header>
 
-        <main class="mb-6">
-            <div id="slide-content" class="w-full bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden flex justify-center items-center text-gray-500">
-                <span>Loading content...</span>
-            </div>
+        <main>
+            <section class="stage">
+                <div id="pdf-tools" class="pdf-tools" aria-live="polite">
+                    <span id="pdf-status">PDF preview</span>
+                    <div class="pdf-tool-actions">
+                        <button id="zoomOutBtn" class="tool-btn" type="button">Zoom -</button>
+                        <span id="zoomValue">100%</span>
+                        <button id="zoomInBtn" class="tool-btn" type="button">Zoom +</button>
+                        <button id="zoomResetBtn" class="tool-btn" type="button">Reset</button>
+                    </div>
+                </div>
+                <div id="slide-content">
+                    <span>Loading content...</span>
+                </div>
+            </section>
+
+            <nav class="nav" aria-label="Slide navigation">
+                <button id="prevButton" class="nav-btn" type="button">&larr; Previous</button>
+                <div id="slide-counter"></div>
+                <button id="nextButton" class="nav-btn" type="button">Next &rarr;</button>
+            </nav>
         </main>
 
-        <nav class="flex justify-between items-center">
-            <button id="prevButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-0.5">
-                &larr; Previous
-            </button>
-            
-            <div id="slide-counter" class="text-lg font-semibold text-gray-700 dark:text-gray-300">
-                </div>
-
-            <button id="nextButton" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out transform hover:-translate-y-0.5">
-                Next &rarr;
-            </button>
-        </nav>
-
-        <div class="text-center mt-8 p-4 bg-gray-200 dark:bg-gray-800 rounded-lg text-sm text-gray-600 dark:text-gray-400">
-            <p><strong class="font-semibold"></strong> Utpal Anand @ 2025</p>
-        </div>
-
+        <footer>
+            &copy; 2026 | Utpal Anand
+        </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- CONFIGURATION ---
-            // Edit this list to add your content.
-            // Make sure the file paths are correct!
             const slides = [
                 { type: 'video', src: 'EmbeddingMatrix.mp4' },
                 { type: 'video', src: 'Combinedembedding.mp4' },
@@ -106,135 +330,219 @@
                 { type: 'pdf', src: 'final.pdf' },
                 { type: 'video', src: 'FFNDiagramCorrected.mp4' }
             ];
-            // ---------------------
 
-            let currentSlide = 0;
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
             const slideContent = document.getElementById('slide-content');
             const prevButton = document.getElementById('prevButton');
             const nextButton = document.getElementById('nextButton');
             const slideCounter = document.getElementById('slide-counter');
+            const pdfTools = document.getElementById('pdf-tools');
+            const pdfStatus = document.getElementById('pdf-status');
+            const zoomValue = document.getElementById('zoomValue');
+            const zoomOutBtn = document.getElementById('zoomOutBtn');
+            const zoomInBtn = document.getElementById('zoomInBtn');
+            const zoomResetBtn = document.getElementById('zoomResetBtn');
+
+            let currentSlide = 0;
             let renderToken = 0;
+            let currentPdf = null;
+            let currentPdfPage = 1;
+            let pdfZoom = 1;
+            const pdfMinZoom = 0.7;
+            const pdfMaxZoom = 3;
+            const pdfZoomStep = 0.2;
 
             if (window.pdfjsLib) {
                 window.pdfjsLib.GlobalWorkerOptions.workerSrc =
                     'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
             }
 
+            function applyTheme(isDark) {
+                if (isDark) {
+                    body.setAttribute('data-theme', 'dark');
+                } else {
+                    body.removeAttribute('data-theme');
+                }
+                themeToggle.checked = isDark;
+            }
+
+            const storedTheme = localStorage.getItem('transformer-theme-dark');
+            if (storedTheme === null) {
+                applyTheme(true);
+            } else {
+                applyTheme(storedTheme === 'true');
+            }
+
+            themeToggle.addEventListener('change', () => {
+                const isDark = themeToggle.checked;
+                applyTheme(isDark);
+                localStorage.setItem('transformer-theme-dark', String(isDark));
+            });
+
+            function showPdfTools(show) {
+                pdfTools.style.display = show ? 'flex' : 'none';
+            }
+
+            function updateZoomText() {
+                zoomValue.textContent = `${Math.round(pdfZoom * 100)}%`;
+            }
+
+            async function drawCurrentPdfPage(token) {
+                if (!currentPdf) return;
+                if (token !== renderToken) return;
+
+                const page = await currentPdf.getPage(currentPdfPage);
+                if (token !== renderToken) return;
+
+                const baseViewport = page.getViewport({ scale: 1 });
+                const containerWidth = Math.max(280, slideContent.clientWidth - 30);
+                const containerHeight = Math.max(220, slideContent.clientHeight - 56);
+                const fitScale = Math.min(containerWidth / baseViewport.width, containerHeight / baseViewport.height);
+                const renderScale = Math.max(fitScale * pdfZoom, 0.2);
+                const viewport = page.getViewport({ scale: renderScale });
+
+                const deviceScale = window.devicePixelRatio || 1;
+                const canvas = document.createElement('canvas');
+                canvas.className = 'pdf-canvas';
+                canvas.width = Math.floor(viewport.width * deviceScale);
+                canvas.height = Math.floor(viewport.height * deviceScale);
+                canvas.style.width = `${Math.floor(viewport.width)}px`;
+                canvas.style.height = `${Math.floor(viewport.height)}px`;
+
+                const context = canvas.getContext('2d', { alpha: false });
+                context.setTransform(deviceScale, 0, 0, deviceScale, 0, 0);
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'pdf-wrap';
+                wrapper.appendChild(canvas);
+
+                const meta = document.createElement('p');
+                meta.className = 'pdf-meta';
+                meta.textContent = `${slides[currentSlide].src} • page ${currentPdfPage} of ${currentPdf.numPages}`;
+                wrapper.appendChild(meta);
+
+                slideContent.innerHTML = '';
+                slideContent.appendChild(wrapper);
+
+                await page.render({ canvasContext: context, viewport }).promise;
+                if (token !== renderToken) return;
+
+                pdfStatus.textContent = `${slides[currentSlide].src} • page ${currentPdfPage}/${currentPdf.numPages}`;
+                updateZoomText();
+            }
+
             async function renderPdfPreview(src, token) {
-                slideContent.innerHTML = `<div class="pdf-preview"><p class="pdf-meta">Loading PDF preview...</p></div>`;
+                showPdfTools(true);
+                slideContent.innerHTML = '<span>Loading PDF preview...</span>';
 
                 if (!window.pdfjsLib) {
-                    slideContent.innerHTML = `<div class="p-8 text-red-500">PDF renderer is unavailable.<br>Please refresh and try again.</div>`;
+                    slideContent.innerHTML = '<div style="padding:16px; color:#c33;">PDF renderer unavailable.</div>';
                     return;
                 }
 
                 try {
                     const loadingTask = window.pdfjsLib.getDocument(src);
-                    const pdfDoc = await loadingTask.promise;
+                    currentPdf = await loadingTask.promise;
                     if (token !== renderToken) return;
 
-                    const page = await pdfDoc.getPage(1);
-                    if (token !== renderToken) return;
-
-                    const viewportBase = page.getViewport({ scale: 1 });
-                    const maxWidth = Math.max(240, slideContent.clientWidth - 30);
-                    const maxHeight = Math.max(200, slideContent.clientHeight - 56);
-                    const scale = Math.min(maxWidth / viewportBase.width, maxHeight / viewportBase.height);
-                    const viewport = page.getViewport({ scale: Math.max(scale, 0.2) });
-
-                    const wrapper = document.createElement('div');
-                    wrapper.className = 'pdf-preview';
-
-                    const canvas = document.createElement('canvas');
-                    canvas.className = 'pdf-canvas';
-                    canvas.width = Math.floor(viewport.width);
-                    canvas.height = Math.floor(viewport.height);
-                    wrapper.appendChild(canvas);
-
-                    const meta = document.createElement('p');
-                    meta.className = 'pdf-meta';
-                    meta.textContent = `${src} • page 1 of ${pdfDoc.numPages}`;
-                    wrapper.appendChild(meta);
-
-                    slideContent.innerHTML = '';
-                    slideContent.appendChild(wrapper);
-
-                    const context = canvas.getContext('2d', { alpha: false });
-                    await page.render({ canvasContext: context, viewport }).promise;
+                    currentPdfPage = 1;
+                    pdfZoom = 1;
+                    await drawCurrentPdfPage(token);
                 } catch (error) {
-                    slideContent.innerHTML = `<div class="p-8 text-red-500">Error: Could not render PDF preview.<br>Please check path: ${src}</div>`;
+                    slideContent.innerHTML = `<div style="padding:16px; color:#c33;">Error loading PDF: ${src}</div>`;
                 }
+            }
+
+            function renderVideo(src) {
+                showPdfTools(false);
+                currentPdf = null;
+                slideContent.innerHTML = '';
+
+                const video = document.createElement('video');
+                video.src = src;
+                video.muted = true;
+                video.autoplay = true;
+                video.loop = true;
+                video.playsInline = true;
+                video.onerror = () => {
+                    slideContent.innerHTML = `<div style="padding:16px; color:#c33;">Error loading video: ${src}</div>`;
+                };
+
+                slideContent.appendChild(video);
+            }
+
+            function updateNavState(index) {
+                slideCounter.textContent = `Item ${index + 1} of ${slides.length}`;
+                prevButton.disabled = index === 0;
+                nextButton.disabled = index === slides.length - 1;
             }
 
             function renderSlide(index) {
-                if (index < 0 || index >= slides.length) {
-                    console.error("Invalid slide index");
+                if (index < 0 || index >= slides.length) return;
+
+                const slide = slides[index];
+                const token = ++renderToken;
+                updateNavState(index);
+
+                if (slide.type === 'video') {
+                    renderVideo(slide.src);
                     return;
                 }
 
-                const token = ++renderToken;
-                const slide = slides[index];
-                // Clear previous content
-                slideContent.innerHTML = '';
-
-                if (slide.type === 'video') {
-                    const video = document.createElement('video');
-                    video.src = slide.src;
-                    video.muted = true;  // As requested, no voice
-                    video.autoplay = true;
-                    video.loop = true;
-                    video.playsInline = true; // Important for mobile browsers
-                    video.className = "w-full h-full object-cover"; 
-                    video.onerror = () => {
-                        slideContent.innerHTML = `<div class="p-8 text-red-500">Error: Could not load video file.<br>Please check path: ${slide.src}</div>`;
-                    };
-                    slideContent.appendChild(video);
-                } 
-                else if (slide.type === 'pdf') {
+                if (slide.type === 'pdf') {
                     renderPdfPreview(slide.src, token);
                 }
-
-                // Update the counter
-                slideCounter.textContent = `Item ${index + 1} of ${slides.length}`;
-                
-                // Disable/Enable buttons at ends
-                prevButton.disabled = index === 0;
-                nextButton.disabled = index === slides.length - 1;
-
-                prevButton.classList.toggle('opacity-50', index === 0);
-                prevButton.classList.toggle('cursor-not-allowed', index === 0);
-                nextButton.classList.toggle('opacity-50', index === slides.length - 1);
-                nextButton.classList.toggle('cursor-not-allowed', index === slides.length - 1);
             }
 
-            // --- Event Listeners ---
+            zoomInBtn.addEventListener('click', async () => {
+                if (!currentPdf) return;
+                pdfZoom = Math.min(pdfMaxZoom, pdfZoom + pdfZoomStep);
+                await drawCurrentPdfPage(renderToken);
+            });
+
+            zoomOutBtn.addEventListener('click', async () => {
+                if (!currentPdf) return;
+                pdfZoom = Math.max(pdfMinZoom, pdfZoom - pdfZoomStep);
+                await drawCurrentPdfPage(renderToken);
+            });
+
+            zoomResetBtn.addEventListener('click', async () => {
+                if (!currentPdf) return;
+                pdfZoom = 1;
+                await drawCurrentPdfPage(renderToken);
+            });
+
             nextButton.addEventListener('click', () => {
                 if (currentSlide < slides.length - 1) {
-                    currentSlide++;
+                    currentSlide += 1;
                     renderSlide(currentSlide);
                 }
             });
 
             prevButton.addEventListener('click', () => {
                 if (currentSlide > 0) {
-                    currentSlide--;
+                    currentSlide -= 1;
                     renderSlide(currentSlide);
                 }
             });
 
-            // --- Initial Load ---
+            window.addEventListener('resize', () => {
+                if (slides[currentSlide] && slides[currentSlide].type === 'pdf' && currentPdf) {
+                    drawCurrentPdfPage(renderToken);
+                }
+            });
+
             if (slides.length > 0) {
                 renderSlide(currentSlide);
             } else {
-                slideContent.innerHTML = '<div class="p-8">No slides configured. Please edit the <code>slides</code> array in the script.</div>';
-                slideCounter.textContent = '0 of 0';
+                slideContent.textContent = 'No slides configured.';
+                showPdfTools(false);
                 prevButton.disabled = true;
                 nextButton.disabled = true;
-                prevButton.classList.add('opacity-50', 'cursor-not-allowed');
-                nextButton.classList.add('opacity-50', 'cursor-not-allowed');
+                slideCounter.textContent = '0 of 0';
             }
         });
     </script>
-
 </body>
 </html>
