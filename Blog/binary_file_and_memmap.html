@@ -74,6 +74,25 @@
       line-height: 1.35;
     }
 
+    .site-id {
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .hindi-name {
+      display: block;
+      color: var(--accent);
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .english-name {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1rem;
+    }
+
     .lead {
       margin: 0;
       color: var(--accent);
@@ -168,6 +187,10 @@
       border-left: 3px solid var(--text);
       padding-left: 12px;
       margin: 0 0 12px;
+    }
+
+    section:hover {
+      border-color: var(--accent);
     }
 
     h3 {
@@ -289,6 +312,10 @@
   <div class="container">
     <header>
       <div class="title-group">
+        <div class="site-id">
+          <span class="hindi-name">उत्पल आनंद</span>
+          <a class="english-name" href="../index.html">Utpal Anand</a>
+        </div>
         <h1>Why should we write tokenized data to <code>.bin</code> (binary) (and memmap vs streaming)?</h1>
         <p class="lead">This post explains why pretokenizing data into a binary format speeds up training, where
           memmap helps, and when modern streaming pipelines are the better choice.</p>
